@@ -45,4 +45,18 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<!--<ItemGroup>
+	  <MauiXaml Remove="Pages\FrequencyDistributionView.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Pages\FrequencyDistributionView.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>-->
+
+	<ItemGroup>
+		<PackageReference Include="ExcelDataReader" Version="3.6.0" />
+	</ItemGroup>
+
 </Project>
