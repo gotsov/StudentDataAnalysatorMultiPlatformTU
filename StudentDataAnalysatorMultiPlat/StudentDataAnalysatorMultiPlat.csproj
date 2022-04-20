@@ -46,6 +46,36 @@
 	</ItemGroup>
 
 	<!--<ItemGroup>
+	  <MauiXaml Remove="Pages\CorrelationAnalysisView.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Pages\CorrelationAnalysisView.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>-->
+
+	<!--<ItemGroup>
+	  <MauiXaml Remove="Pages\StatisticalDispersionView.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Pages\StatisticalDispersionView.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>-->
+
+	<!--<ItemGroup>
+	  <MauiXaml Remove="Pages\CentralTendencyView.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Pages\CentralTendencyView.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>-->
+
+	<!--<ItemGroup>
 	  <MauiXaml Remove="Pages\FrequencyDistributionView.xaml" />
 	</ItemGroup>
 
@@ -57,6 +87,19 @@
 
 	<ItemGroup>
 		<PackageReference Include="ExcelDataReader" Version="3.6.0" />
+		<PackageReference Include="Prism.Core" Version="8.1.97" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\CentralTendencyView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\CorrelationAnalysisView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\StatisticalDispersionView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

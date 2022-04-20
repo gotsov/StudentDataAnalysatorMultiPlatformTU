@@ -36,12 +36,13 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Button 
                 Grid.Row="0"
                 Grid.ColumnSpan="2"
@@ -69,7 +70,29 @@
 
             <ListView Grid.Row="3"
                       Grid.ColumnSpan="2"
+                      
                       ItemsSource="{Binding StudentsList}">
+
+                <ListView.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0"
+                               Text="Id"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+
+                        <Label Grid.Column="1"
+                               Text="Result"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+
+                    </Grid>
+                </ListView.Header>
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -81,15 +104,18 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Grid.Column="0" 
-                                        Text="{Binding Id}"/>
+                                            Text="{Binding Id}"
+                                            Padding="10,10,10,10"/>
                                     <Label Grid.Column="1"
-                                        Text="{Binding Result}"/>
+                                            Text="{Binding Result}"
+                                            Padding="10,10,10,10"/>
+
                                 </Grid>
                             </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                
+
             </ListView>
         </Grid>
     </ScrollView>

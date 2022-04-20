@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:vm="clr-namespace:StudentDataAnalysatorMultiPlat.ViewModels"
+        x:Class="StudentDataAnalysatorMultiPlat.Pages.CentralTendencyView">
+
+    <ContentPage.BindingContext>
+        <vm:CentralTendencyViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        ItemsSource="{Binding TendencyResult}">
+
+                <ListView.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0"
+                                       Text="Медиана"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+
+                        <Label Grid.Column="1"
+                                       Text="Мода"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+
+                        <Label Grid.Column="2"
+                                       Text="Средно"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+
+                    </Grid>
+                </ListView.Header>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0" 
+                                                    Text="{Binding Median}"
+                                                    Padding="10,10,10,10"/>
+                                    <Label Grid.Column="1"
+                                                    Text="{Binding Mode}"
+                                                    Padding="10,10,10,10"/>
+                                    <Label Grid.Column="2"
+                                                    Text="{Binding Average}"
+                                                    Padding="10,10,10,10"/>
+
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
