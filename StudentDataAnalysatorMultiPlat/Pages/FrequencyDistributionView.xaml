@@ -4,8 +4,67 @@
             xmlns:vm="clr-namespace:StudentDataAnalysatorMultiPlat.ViewModels"
             x:Class="StudentDataAnalysatorMultiPlat.Pages.FrequencyDistributionView">
 
+    <ContentPage.BindingContext>
+        <vm:FrequencyDistributionViewModel />
+    </ContentPage.BindingContext>
+
     <ScrollView>
-        
+        <ListView ItemsSource="{Binding FrequencyResult}">
+
+            <ListView.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0"
+                               Text="Прегледани лекции"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+
+                    <Label Grid.Column="1"
+                               Text="Абсолютна ч."
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+
+                    <Label Grid.Column="2"
+                               Text="Относителна ч."
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+
+                </Grid>
+            </ListView.Header>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Column="0" 
+                                            Text="{Binding ViewedCourses}"
+                                            Padding="10,10,10,10"/>
+                                <Label Grid.Column="1"
+                                            Text="{Binding Frequency}"
+                                            Padding="10,10,10,10"/>
+                                <Label Grid.Column="2"
+                                            Text="{Binding RelativeFrequency}"
+                                            Padding="10,10,10,10"/>
+
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
     </ScrollView>
 
 </ContentPage>

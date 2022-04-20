@@ -1,4 +1,6 @@
-﻿namespace StudentDataAnalysatorMultiPlat;
+﻿using Prism.Events;
+
+namespace StudentDataAnalysatorMultiPlat;
 
 public partial class App : Application
 {
@@ -6,6 +8,8 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell();
+		MainPage = new AppShell(); 
+		SingletonClass.TestEventAggregator = new EventAggregator();
 	}
+
 }

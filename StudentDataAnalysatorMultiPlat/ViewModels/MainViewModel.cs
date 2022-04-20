@@ -1,4 +1,5 @@
 ﻿using StudentDataAnalysatorMultiPlat.Commands;
+using StudentDataAnalysatorMultiPlat.Events;
 using StudentDataAnalysatorMultiPlat.Models;
 using StudentDataAnalysatorMultiPlat.Services;
 using System;
@@ -31,6 +32,8 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         {
             SelectedPathStudentsResults = "Избери файл с резултати на студентите (StudentsResults)";
             SelectedPathLogs = "Избери файл с дейности на студентите (Logs_Course)";
+
+            SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Subscribe(SendLists);
         }
 
         public ObservableCollection<Student> StudentsList
@@ -44,7 +47,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
                 studentsList = value;
                 OnPropertyChanged("StudentsList");
 
-                //SingletonClass.TestEventAggregator.GetEvent<GetStudentsResultsListEvent>().Publish(StudentsList);
+                
             }
         }
 
@@ -59,7 +62,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
                 logsList = value;
                 OnPropertyChanged("LogsList");
 
-                //SingletonClass.TestEventAggregator.GetEvent<GetLogsListEvent>().Publish(LogsList);
+                
             }
         }
 
@@ -156,13 +159,13 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             if (IsTableStudentsResults())
             {
                 StudentsList = _excelDataReader.StudentListFromExcelTable();
-                SelectedPathStudentsResults = SelectedPath;
+                SelectedPathStudentsResults = "..." + SelectedPath[^37..];
                 IsStudentsPathSelected = true;
             }
             else
             {
                 LogsList = _excelDataReader.LogListFromExcelTable();
-                SelectedPathLogs = SelectedPath;
+                SelectedPathLogs = "..." + SelectedPath[^38..];
                 IsLogsPathSelected = true;
             }
         }
@@ -189,6 +192,13 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             return true;
         }
 
-
+        public void SendLists(string test)
+        {
+            if (SelectedPath != null)
+            {
+                SingletonClass.TestEventAggregator.GetEvent<GetStudentsResultsListEvent>().Publish(StudentsList);
+                SingletonClass.TestEventAggregator.GetEvent<GetLogsListEvent>().Publish(LogsList);
+            }
+        }
     }
 }

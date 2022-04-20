@@ -8,13 +8,25 @@
     Shell.FlyoutBehavior="Disabled">
 
     <TabBar>
-        <Tab Title="Преглед">
+        <Tab Title="Начало">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}"
-                          Title="Student Analysator"/>
+                          Title="Студентска система"/>
         </Tab>
-        <Tab Title="Честотно разпределение">
+        <Tab Title="Честотно разп.">
             <ShellContent ContentTemplate="{DataTemplate cp:FrequencyDistributionView}"
-                          Title="Student Analysator"/>
+                          Title="Честотно разпределение"/>
+        </Tab>
+        <Tab Title="Тенденция">
+            <ShellContent ContentTemplate="{DataTemplate cp:CentralTendencyView}"
+                          Title="Централна тенденция"/>
+        </Tab>
+        <Tab Title="Разсейване">
+            <ShellContent ContentTemplate="{DataTemplate cp:StatisticalDispersionView}"
+                          Title="Мерки на разсейване"/>
+        </Tab>
+        <Tab Title="Анализ">
+            <ShellContent ContentTemplate="{DataTemplate cp:CorrelationAnalysisView}"
+                          Title="Корелационен анализ"/>
         </Tab>
     </TabBar>
 
