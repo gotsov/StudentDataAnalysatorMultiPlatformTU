@@ -24,9 +24,8 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             CoursesViewedByEachStudent = new List<int>();
             StudentCoursesViewedDict = new Dictionary<double, int>();
 
-            SingletonClass.TestEventAggregator.GetEvent<GetLogsListEvent>().Subscribe(SetLogsList);
+            SingletonClass.TestEventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Subscribe(SetResultList);
             SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Publish("");
-            SetDispersionOfViewedCourses();
         }
         public ObservableCollection<Log> LogsList
         {
@@ -67,61 +66,10 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
                 OnPropertyChanged("CoursesViewedByEachStudent");
             }
         }
-        private void SetDispersionOfViewedCourses()
+
+        private void SetResultList(ObservableCollection<StatisticalDispersionResult> result)
         {
-            ExtractAllStudentsFromLogs();
-            FillDictionaryWithCoursesViewedData();
-            FillCountOfViewedCoursesByStudents();
-            CalculateDispersionResult();
-        }
-        private void ExtractAllStudentsFromLogs()
-        {
-            double studentId;
-            foreach (Log log in LogsList)
-            {
-                studentId = Double.Parse(log.Description.Substring(18, 4));
-                if (!studentIds.Contains(studentId))
-                {
-                    studentIds.Add(studentId);
-                }
-            }
-        }
-        private void FillDictionaryWithCoursesViewedData()
-        {
-            int coursesViewed;
-            foreach (double id in studentIds)
-            {
-                coursesViewed = 0;
-                foreach (Log log in LogsList)
-                {
-                    if (log.Description.Contains(id.ToString()) && log.EventName == "Course viewed")
-                    {
-                        coursesViewed++;
-                        StudentCoursesViewedDict[id] = coursesViewed;
-                    }
-                }
-            }
-        }
-        private void FillCountOfViewedCoursesByStudents()
-        {
-            foreach (var student in StudentCoursesViewedDict)
-            {
-                CoursesViewedByEachStudent.Add(student.Value);
-            }
-            CoursesViewedByEachStudent = CoursesViewedByEachStudent.OrderBy(n => n).ToList();
-        }
-        private void CalculateDispersionResult()
-        {
-            int minMaxDispersion;
-            double variance, standartDeviation;
-            minMaxDispersion = StatisticalDispersionCalculator.CalculateMinMaxDispersion(CoursesViewedByEachStudent);
-            variance = StatisticalDispersionCalculator.CalculateVariance(CoursesViewedByEachStudent);
-            standartDeviation = StatisticalDispersionCalculator.CalculateStandartDeviation(CoursesViewedByEachStudent);
-            DispersionResult.Add(new StatisticalDispersionResult(minMaxDispersion, Math.Round(variance, 2), Math.Round(standartDeviation, 2)));
-        }
-        private void SetLogsList(ObservableCollection<Log> newLogsList)
-        {
-            LogsList = newLogsList;
+            DispersionResult = result;
         }
     }
 }

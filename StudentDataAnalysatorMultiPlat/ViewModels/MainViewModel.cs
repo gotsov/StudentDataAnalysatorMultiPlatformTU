@@ -1,7 +1,8 @@
 ﻿using StudentDataAnalysatorMultiPlat.Commands;
 using StudentDataAnalysatorMultiPlat.Events;
 using StudentDataAnalysatorMultiPlat.Models;
-using StudentDataAnalysatorMultiPlat.Services;
+using StudentDataAnalysatorMultiPlat.Services.CalculationServices;
+using StudentDataAnalysatorMultiPlat.Services.ExcelServices;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,12 +22,22 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         private bool _isStudentsPathSelected;
         private bool _isLogsPathSelected;
         private bool _areBothPathsSelected;
+
         private ExcelFileLoaderService _excelDataReader;
+        private CentralTendencyOfViewedCoursesByUsersService _centralTendencyOfViewedCoursesByUsersService;
+        private DispersionOfViewedCoursesService _dispersionOfViewedCoursesService;
+        private FrequencyOfViewedCoursesService _frequencyOfViewedCoursesService;
 
         private ObservableCollection<Student> studentsList;
         private ObservableCollection<Log> logsList;
 
         private AsyncCommand _searchFileCommand;
+        private RelayCommand _calculateCommand;
+
+        //Calculation Results
+        private ObservableCollection<FrequencyDistributionResult> frequencyResult;
+        private ObservableCollection<CentralTendencyResult> tendencyResult;
+        private ObservableCollection<StatisticalDispersionResult> dispersionResult;
 
         public MainViewModel()
         {
@@ -152,6 +163,18 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             }
         }
 
+        public RelayCommand CalculateCommand
+        {
+            get
+            {
+                if(_calculateCommand == null)
+                {
+                    _calculateCommand = new RelayCommand(CalculateStatistics, CanExecuteCalculateStatistics);
+                }
+                return _calculateCommand;
+            }
+        }
+
         private void GetExcelData(string path)
         {
             ExcelFileLoaderService _excelDataReader = new ExcelFileLoaderService(path);
@@ -194,11 +217,37 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         public void SendLists(string test)
         {
-            if (SelectedPath != null)
-            {
-                SingletonClass.TestEventAggregator.GetEvent<GetStudentsResultsListEvent>().Publish(StudentsList);
-                SingletonClass.TestEventAggregator.GetEvent<GetLogsListEvent>().Publish(LogsList);
-            }
+            //if (SelectedPath != null)
+            //{
+            //    SingletonClass.TestEventAggregator.GetEvent<GetStudentsResultsListEvent>().Publish(StudentsList);
+            //    SingletonClass.TestEventAggregator.GetEvent<GetLogsListEvent>().Publish(LogsList);
+            //}
+
+            //////Loading on Calculate click
+            //SingletonClass.TestEventAggregator.GetEvent<GetFrequencyDistributionResultEvent>().Publish(frequencyResult);
+
+            SingletonClass.TestEventAggregator.GetEvent<GetCentralTendencyResultEvent>().Publish(tendencyResult);
+            SingletonClass.TestEventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Publish(dispersionResult);
+        }
+
+        private void CalculateStatistics(object o)
+        {
+            //_frequencyOfViewedCoursesService = new FrequencyOfViewedCoursesService(LogsList);
+            //frequencyResult = _frequencyOfViewedCoursesService.GetResults();
+            SelectedPathStudentsResults = "CALCULATION STARTED";
+
+            _centralTendencyOfViewedCoursesByUsersService = new CentralTendencyOfViewedCoursesByUsersService(StudentsList, LogsList);
+            tendencyResult = _centralTendencyOfViewedCoursesByUsersService.GetResults();
+
+            _dispersionOfViewedCoursesService = new DispersionOfViewedCoursesService(LogsList);
+            dispersionResult = _dispersionOfViewedCoursesService.GetResults();
+
+            SelectedPathStudentsResults = "CALCULATION FINISHED";
+        }
+
+        private bool CanExecuteCalculateStatistics(object o)
+        {
+            return true;
         }
     }
 }

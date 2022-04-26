@@ -23,11 +23,8 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             TendencyResult = new ObservableCollection<CentralTendencyResult>();
             StudentCoursesViewedDict = new Dictionary<double, int>();
 
-            SingletonClass.TestEventAggregator.GetEvent<GetStudentsResultsListEvent>().Subscribe(SetStudentsList);
-            SingletonClass.TestEventAggregator.GetEvent<GetLogsListEvent>().Subscribe(SetLogsList);
+            SingletonClass.TestEventAggregator.GetEvent<GetCentralTendencyResultEvent>().Subscribe(SetResultList);
             SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Publish("");
-
-            GetCoursesViewByUsers();
         }
 
         public ObservableCollection<Student> StudentsList
@@ -84,84 +81,9 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             }
         }
 
-        private void SetStudentsList(ObservableCollection<Student> newList)
+        private void SetResultList(ObservableCollection<CentralTendencyResult> result)
         {
-            StudentsList = newList;
-        }
-
-        private void GetCoursesViewByUsers()
-        {
-            FillDictionaryWithCoursesViewedData();
-
-            List<double> coursesViewedByUser = SetListToCalculateTendencies();
-
-            CalculateCentralTendencyResult(coursesViewedByUser);
-        }
-
-        private void CalculateCentralTendencyResult(List<double> results)
-        {
-            double median = CentralTendencyCalculator.GetMedian(results);
-            double average = Math.Round(CentralTendencyCalculator.GetAverage(results), 2);
-
-            string modesToString = MergeModesToOneString(results);
-
-            TendencyResult.Add(new CentralTendencyResult(median, modesToString, average));
-        }
-
-        private string MergeModesToOneString(List<double> results)
-        {
-            List<double> modes = CentralTendencyCalculator.GetMode(results);
-            string modesToString = "";
-
-            if (modes.Count() > 1)
-            {
-                modesToString += modes[0].ToString();
-                modes.RemoveAt(0);
-
-                foreach (double mode in modes)
-                {
-                    modesToString += ", " + mode.ToString();
-                }
-            }
-            else
-                modesToString += modes[0];
-
-            return modesToString;
-        }
-
-        private void FillDictionaryWithCoursesViewedData()
-        {
-            int count;
-            foreach (var student in StudentsList)
-            {
-                count = 0;
-                foreach (var log in LogsList)
-                {
-                    if (log.Description.Contains(student.Id.ToString()) && log.EventName == "Course viewed")
-                    {
-                        count++;
-                        StudentCoursesViewedDict[student.Id] = count;
-                    }
-                }
-            }
-        }
-
-        private List<double> SetListToCalculateTendencies()
-        {
-            List<double> result = new List<double>();
-
-            foreach (int coursesViewed in StudentCoursesViewedDict.Values)
-            {
-                result.Add(coursesViewed);
-            }
-
-            return result;
-        }
-
-
-        private void SetLogsList(ObservableCollection<Log> newLogsList)
-        {
-            LogsList = newLogsList;
+            TendencyResult = result;
         }
     }
 }

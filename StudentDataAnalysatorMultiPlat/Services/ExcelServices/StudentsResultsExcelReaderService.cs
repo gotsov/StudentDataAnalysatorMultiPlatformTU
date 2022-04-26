@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentDataAnalysatorMultiPlat.Services
+namespace StudentDataAnalysatorMultiPlat.Services.ExcelServices
 {
     public class StudentsResultsExcelReaderService : IExcelFileReaderService
     {
