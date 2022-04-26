@@ -32,15 +32,16 @@
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Button 
@@ -68,7 +69,14 @@
                 Style="{DynamicResource IsLogsPathSelectedTrigger}"
                 Margin="5,0,5,5"/>
 
-            <ListView Grid.Row="3"
+            <Button 
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Text="Калкулирай"
+                Command="{Binding CalculateCommand}"
+                Margin="5,5,5,10"/>
+
+            <ListView Grid.Row="4"
                       Grid.ColumnSpan="2"
                       
                       ItemsSource="{Binding StudentsList}">

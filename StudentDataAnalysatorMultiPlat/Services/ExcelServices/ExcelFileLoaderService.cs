@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static StudentDataAnalysatorMultiPlat.Enums.Enums;
 
-namespace StudentDataAnalysatorMultiPlat.Services
+namespace StudentDataAnalysatorMultiPlat.Services.ExcelServices
 {
     public class ExcelFileLoaderService
     {
