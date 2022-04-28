@@ -91,6 +91,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\DatasetAnalysator\DatasetAnalysator.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Pages\CentralTendencyView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

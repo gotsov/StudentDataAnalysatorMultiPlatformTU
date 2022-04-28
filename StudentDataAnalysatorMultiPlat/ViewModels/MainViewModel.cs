@@ -27,6 +27,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         private CentralTendencyOfViewedCoursesByUsersService _centralTendencyOfViewedCoursesByUsersService;
         private DispersionOfViewedCoursesService _dispersionOfViewedCoursesService;
         private FrequencyOfViewedCoursesService _frequencyOfViewedCoursesService;
+        private CorrelationAnalysisOfEditedWikisService _correlationAnalysisOfEditedWikisService;
 
         private ObservableCollection<Student> studentsList;
         private ObservableCollection<Log> logsList;
@@ -38,6 +39,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         private ObservableCollection<FrequencyDistributionResult> frequencyResult;
         private ObservableCollection<CentralTendencyResult> tendencyResult;
         private ObservableCollection<StatisticalDispersionResult> dispersionResult;
+        private ObservableCollection<CorrelationAnalysisResult> correlationResult;
 
         public MainViewModel()
         {
@@ -228,6 +230,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
             SingletonClass.TestEventAggregator.GetEvent<GetCentralTendencyResultEvent>().Publish(tendencyResult);
             SingletonClass.TestEventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Publish(dispersionResult);
+            SingletonClass.TestEventAggregator.GetEvent<GetCorrelationAnalysisEvent>().Publish(correlationResult);
         }
 
         private void CalculateStatistics(object o)
@@ -242,6 +245,9 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             _dispersionOfViewedCoursesService = new DispersionOfViewedCoursesService(LogsList);
             dispersionResult = _dispersionOfViewedCoursesService.GetResults();
 
+            _correlationAnalysisOfEditedWikisService = new CorrelationAnalysisOfEditedWikisService(StudentsList, LogsList);
+            correlationResult = _correlationAnalysisOfEditedWikisService.GetResults();
+
             SelectedPathStudentsResults = "CALCULATION FINISHED";
         }
 
@@ -249,5 +255,6 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         {
             return true;
         }
+
     }
 }
