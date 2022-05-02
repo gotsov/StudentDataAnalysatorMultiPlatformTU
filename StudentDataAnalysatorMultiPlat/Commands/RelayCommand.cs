@@ -29,5 +29,13 @@ namespace StudentDataAnalysatorMultiPlat.Commands
         {
             this.execute(parameter);
         }
+
+        public void RaiseCanExecuteChanged()
+        {
+            if (CanExecuteChanged != null)
+            {
+                CanExecuteChanged(this, EventArgs.Empty);
+            }
+        }
     }
 }

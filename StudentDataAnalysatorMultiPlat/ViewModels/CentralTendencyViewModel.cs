@@ -15,14 +15,9 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         private ObservableCollection<CentralTendencyResult> tendencyResult;
         private ObservableCollection<Student> studentsList;
         private ObservableCollection<Log> logsList;
-        private List<double> results = new List<double>();
-        private Dictionary<double, int> studentCoursesViewedDict;
 
         public CentralTendencyViewModel()
         {
-            TendencyResult = new ObservableCollection<CentralTendencyResult>();
-            StudentCoursesViewedDict = new Dictionary<double, int>();
-
             SingletonClass.TestEventAggregator.GetEvent<GetCentralTendencyResultEvent>().Subscribe(SetResultList);
             SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Publish("");
         }
@@ -60,24 +55,6 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             {
                 tendencyResult = value;
                 OnPropertyChanged("TendencyResult");
-            }
-        }
-
-        public Dictionary<double, int> StudentCoursesViewedDict
-        {
-            get { return studentCoursesViewedDict; }
-            set
-            {
-                studentCoursesViewedDict = value;
-                OnPropertyChanged("StudentCoursesViewedDict");
-            }
-        }
-
-        private void GetAllStudentsResults()
-        {
-            foreach (Student student in StudentsList)
-            {
-                results.Add(student.Result);
             }
         }
 

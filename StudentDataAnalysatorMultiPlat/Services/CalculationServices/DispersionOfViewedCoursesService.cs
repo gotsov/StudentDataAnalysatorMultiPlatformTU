@@ -17,37 +17,37 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
         private Dictionary<double, int> studentCoursesViewedDict;
         private List<int> coursesViewedByEachStudent;
 
-        public DispersionOfViewedCoursesService(ObservableCollection<Log> logsList)
+        public DispersionOfViewedCoursesService(ObservableCollection<Log> logsList, List<double> studentIds)
         {
             this.logsList = logsList;
+            this.studentIds = studentIds;
 
             dispersionResult = new ObservableCollection<StatisticalDispersionResult>();
-            studentIds = new List<double>();
             studentCoursesViewedDict = new Dictionary<double, int>();
             coursesViewedByEachStudent = new List<int>();
         }
 
         public ObservableCollection<StatisticalDispersionResult> GetResults()
         {
-            ExtractAllStudentsFromLogs();
+            //ExtractAllStudentsFromLogs();
             FillDictionaryWithCoursesViewedData();
             FillCountOfViewedCoursesByStudents();
             CalculateDispersionResult();
 
             return dispersionResult;
         }
-        private void ExtractAllStudentsFromLogs()
-        {
-            double studentId;
-            foreach (Log log in logsList)
-            {
-                studentId = Double.Parse(log.Description.Substring(18, 4));
-                if (!studentIds.Contains(studentId))
-                {
-                    studentIds.Add(studentId);
-                }
-            }
-        }
+        //private void ExtractAllStudentsFromLogs()
+        //{
+        //    double studentId;
+        //    foreach (Log log in logsList)
+        //    {
+        //        studentId = Double.Parse(log.Description.Substring(18, 4));
+        //        if (!studentIds.Contains(studentId))
+        //        {
+        //            studentIds.Add(studentId);
+        //        }
+        //    }
+        //}
         private void FillDictionaryWithCoursesViewedData()
         {
             int coursesViewed;

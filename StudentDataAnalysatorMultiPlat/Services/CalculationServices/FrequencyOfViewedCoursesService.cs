@@ -17,11 +17,11 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
         private Dictionary<double, int> studentCoursesViewedDict;
         private SortedDictionary<int, int> frequencyViewedCoursesDict;
 
-        public FrequencyOfViewedCoursesService(ObservableCollection<Log> logsList)
+        public FrequencyOfViewedCoursesService(ObservableCollection<Log> logsList, List<double> studentIds)
         {
             this.logsList = logsList;
+            this.studentIds = studentIds;
 
-            studentIds = new List<double>();
             frequencyResult = new ObservableCollection<FrequencyDistributionResult>();
             studentCoursesViewedDict = new Dictionary<double, int>();
             frequencyViewedCoursesDict = new SortedDictionary<int, int>();
@@ -29,7 +29,7 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
 
         public ObservableCollection<FrequencyDistributionResult>  GetResults()
         {
-            ExtractAllStudentsFromLogs();
+            //ExtractAllStudentsFromLogs();
             FillDictionaryWithCoursesViewedData();
             FillFrequencyOfViewedCourses();
             CalculateFrequencyDistributionResult();
@@ -37,18 +37,18 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
             return frequencyResult;
         }
 
-        private void ExtractAllStudentsFromLogs()
-        {
-            double studentId;
-            foreach (Log log in logsList)
-            {
-                studentId = Double.Parse(log.Description.Substring(18, 4));
-                if (!studentIds.Contains(studentId))
-                {
-                    studentIds.Add(studentId);
-                }
-            }
-        }
+        //private void ExtractAllStudentsFromLogs()
+        //{
+        //    double studentId;
+        //    foreach (Log log in logsList)
+        //    {
+        //        studentId = Double.Parse(log.Description.Substring(18, 4));
+        //        if (!studentIds.Contains(studentId))
+        //        {
+        //            studentIds.Add(studentId);
+        //        }
+        //    }
+        //}
 
         private void FillDictionaryWithCoursesViewedData()
         {

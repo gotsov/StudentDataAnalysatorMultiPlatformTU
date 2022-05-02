@@ -14,6 +14,11 @@ namespace StudentDataAnalysatorMultiPlat.Services.ExcelServices
     {
         private string path;
 
+        public ExcelFileLoaderService()
+        {
+
+        }
+
         public ExcelFileLoaderService(string path)
         {
             this.path = path;
@@ -40,7 +45,7 @@ namespace StudentDataAnalysatorMultiPlat.Services.ExcelServices
             }
         }
 
-        public ObservableCollection<Student> StudentListFromExcelTable()
+        public ObservableCollection<Student> GetStudentListFromExcelTable()
         {
             StudentsResultsExcelReaderService service = new StudentsResultsExcelReaderService();
             service.ReadExcel(path);
@@ -48,7 +53,7 @@ namespace StudentDataAnalysatorMultiPlat.Services.ExcelServices
             return service.StudentsList;
         }
 
-        public ObservableCollection<Log> LogListFromExcelTable()
+        public ObservableCollection<Log> GetLogListFromExcelTable()
         {
             StudentsLogsExcelReaderSerivice service = new StudentsLogsExcelReaderSerivice();
             service.ReadExcel(path);
