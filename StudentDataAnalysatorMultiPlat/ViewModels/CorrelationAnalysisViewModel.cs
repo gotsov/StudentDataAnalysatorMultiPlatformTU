@@ -14,15 +14,11 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         private ObservableCollection<CorrelationAnalysisResult> correlationResult;
         private ObservableCollection<Log> logsList;
-        private Dictionary<double, int> studentWikisEditedDict;
         private ObservableCollection<Student> studentsList;
 
 
         public CorrelationAnalysisViewModel()
         {
-            correlationResult = new ObservableCollection<CorrelationAnalysisResult>();
-            studentWikisEditedDict = new Dictionary<double, int>();
-
             SingletonClass.TestEventAggregator.GetEvent<GetCorrelationAnalysisEvent>().Subscribe(SetResultList);
             SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Publish("");
         }
@@ -60,16 +56,6 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             {
                 correlationResult = value;
                 OnPropertyChanged("CorrelationResult");
-            }
-        }
-
-        public Dictionary<double, int> StudentWikisEditedDict
-        {
-            get { return studentWikisEditedDict; }
-            set
-            {
-                studentWikisEditedDict = value;
-                OnPropertyChanged("StudentWikisEditedDict");
             }
         }
 

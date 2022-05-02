@@ -26,105 +26,104 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        
+
     </ContentPage.Resources>
 
-    <ScrollView>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <Button 
-                Grid.Row="0"
-                Grid.ColumnSpan="2"
-                Text="Отвори файл"
-                Command="{Binding SearchFileCommand}"
-                Margin="5,10,5,10"/>
+        <Button 
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Text="Отвори валиден Excel файл"
+            Command="{Binding SearchFileCommand}"
+            Margin="5,10,5,10"/>
 
-            <Label 
-                Grid.Row="1"
-                Grid.ColumnSpan="2"
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center"
-                Text="{Binding SelectedPathStudentsResults}"
-                Style="{DynamicResource IsStudentsPathSelectedTrigger}"
-                Margin="5,0,5,5"/>
+        <Label 
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            VerticalTextAlignment="Center"
+            HorizontalTextAlignment="Center"
+            Text="{Binding SelectedPathStudentsResults}"
+            Style="{DynamicResource IsStudentsPathSelectedTrigger}"
+            Margin="5,0,5,5"/>
 
-            <Label 
-                Grid.Row="2"
-                Grid.ColumnSpan="2"
-                VerticalTextAlignment="Center"
-                HorizontalTextAlignment="Center"
-                Text="{Binding SelectedPathLogs}"
-                Style="{DynamicResource IsLogsPathSelectedTrigger}"
-                Margin="5,0,5,5"/>
+        <Label 
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            VerticalTextAlignment="Center"
+            HorizontalTextAlignment="Center"
+            Text="{Binding SelectedPathLogs}"
+            Style="{DynamicResource IsLogsPathSelectedTrigger}"
+            Margin="5,0,5,5"/>
 
-            <Button 
-                Grid.Row="3"
-                Grid.ColumnSpan="2"
-                Text="Калкулирай"
-                Command="{Binding CalculateCommand}"
-                Margin="5,5,5,10"/>
+        <Button 
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Text="{Binding CalculationButtonText}"
+            Command="{Binding CalculateCommand}"
+            Margin="5,5,5,10"/>
 
-            <ListView Grid.Row="4"
-                      Grid.ColumnSpan="2"
+        <ListView Grid.Row="4"
+                    Grid.ColumnSpan="2"
                       
-                      ItemsSource="{Binding StudentsList}">
+                    ItemsSource="{Binding StudentsList}">
 
-                <ListView.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+            <ListView.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0"
-                               Text="Id"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"/>
+                    <Label Grid.Column="0"
+                            Text="Id"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
 
-                        <Label Grid.Column="1"
-                               Text="Result"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"/>
+                    <Label Grid.Column="1"
+                            Text="Result"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
 
-                    </Grid>
-                </ListView.Header>
+                </Grid>
+            </ListView.Header>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Frame>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
 
-                                    <Label Grid.Column="0" 
-                                            Text="{Binding Id}"
-                                            Padding="10,10,10,10"/>
-                                    <Label Grid.Column="1"
-                                            Text="{Binding Result}"
-                                            Padding="10,10,10,10"/>
+                                <Label Grid.Column="0" 
+                                        Text="{Binding Id}"
+                                        Padding="10,10,10,10"/>
+                                <Label Grid.Column="1"
+                                        Text="{Binding Result}"
+                                        Padding="10,10,10,10"/>
 
-                                </Grid>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
 
-            </ListView>
-        </Grid>
-    </ScrollView>
+        </ListView>
+    </Grid>
+
 </ContentPage>

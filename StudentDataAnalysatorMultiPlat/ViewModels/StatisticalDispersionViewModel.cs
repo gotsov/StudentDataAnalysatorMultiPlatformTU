@@ -13,17 +13,10 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
     public class StatisticalDispersionViewModel : BaseViewModel
     {
         private ObservableCollection<StatisticalDispersionResult> dispersionResult;
-        private List<double> studentIds;
-        private List<int> coursesViewedByEachStudent;
         private ObservableCollection<Log> logsList;
-        private Dictionary<double, int> studentCoursesViewedDict;
+
         public StatisticalDispersionViewModel()
         {
-            studentIds = new List<double>();
-            DispersionResult = new ObservableCollection<StatisticalDispersionResult>();
-            CoursesViewedByEachStudent = new List<int>();
-            StudentCoursesViewedDict = new Dictionary<double, int>();
-
             SingletonClass.TestEventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Subscribe(SetResultList);
             SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Publish("");
         }
@@ -46,24 +39,6 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             {
                 dispersionResult = value;
                 OnPropertyChanged("DispersionResult");
-            }
-        }
-        public Dictionary<double, int> StudentCoursesViewedDict
-        {
-            get { return studentCoursesViewedDict; }
-            set
-            {
-                studentCoursesViewedDict = value;
-                OnPropertyChanged("StudentCoursesViewedDict");
-            }
-        }
-        public List<int> CoursesViewedByEachStudent
-        {
-            get { return coursesViewedByEachStudent; }
-            set
-            {
-                coursesViewedByEachStudent = value;
-                OnPropertyChanged("CoursesViewedByEachStudent");
             }
         }
 

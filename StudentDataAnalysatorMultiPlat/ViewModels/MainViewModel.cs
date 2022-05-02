@@ -15,40 +15,45 @@ using static StudentDataAnalysatorMultiPlat.Enums.Enums;
 namespace StudentDataAnalysatorMultiPlat.ViewModels
 {
     public class MainViewModel : BaseViewModel
-    {  
-        private string _selectedPath;
-        private string _selectedPathStudentsResults;
-        private string _selectedPathLogs;
-        private bool _isStudentsPathSelected;
-        private bool _isLogsPathSelected;
-        private bool _areBothPathsSelected;
+    {
+        #region Fields
+        private string selectedPath;
+        private string selectedPathStudentsResults;
+        private string selectedPathLogs;
+        private bool isStudentsPathSelected;
+        private bool isLogsPathSelected;
+        private bool areBothPathsSelected;
+        private string calculationButtonText;
 
-        private ExcelFileLoaderService _excelDataReader;
-        private CentralTendencyOfViewedCoursesByUsersService _centralTendencyOfViewedCoursesByUsersService;
-        private DispersionOfViewedCoursesService _dispersionOfViewedCoursesService;
-        private FrequencyOfViewedCoursesService _frequencyOfViewedCoursesService;
-        private CorrelationAnalysisOfEditedWikisService _correlationAnalysisOfEditedWikisService;
+        private ExcelFileLoaderService excelDataReader = new ExcelFileLoaderService();
+        private CentralTendencyOfViewedCoursesByUsersService centralTendencyOfViewedCoursesByUsersService;
+        private DispersionOfViewedCoursesService dispersionOfViewedCoursesService;
+        private FrequencyOfViewedCoursesService frequencyOfViewedCoursesService;
+        private CorrelationAnalysisOfEditedWikisService correlationAnalysisOfEditedWikisService;
 
         private ObservableCollection<Student> studentsList;
         private ObservableCollection<Log> logsList;
 
-        private AsyncCommand _searchFileCommand;
-        private RelayCommand _calculateCommand;
+        private AsyncCommand searchFileCommand;
+        private RelayCommand calculateCommand;
 
         //Calculation Results
         private ObservableCollection<FrequencyDistributionResult> frequencyResult;
         private ObservableCollection<CentralTendencyResult> tendencyResult;
         private ObservableCollection<StatisticalDispersionResult> dispersionResult;
-        private ObservableCollection<CorrelationAnalysisResult> correlationResult;
+        private ObservableCollection<CorrelationAnalysisResult> correlationResult; 
+        #endregion
 
         public MainViewModel()
         {
             SelectedPathStudentsResults = "Избери файл с резултати на студентите (StudentsResults)";
             SelectedPathLogs = "Избери файл с дейности на студентите (Logs_Course)";
+            CalculationButtonText = "Не са избрани файлове";
 
-            SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Subscribe(SendLists);
+            SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Subscribe(SendListsToSubscribedViewModels);
         }
 
+        #region Properties
         public ObservableCollection<Student> StudentsList
         {
             get
@@ -60,7 +65,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
                 studentsList = value;
                 OnPropertyChanged("StudentsList");
 
-                
+
             }
         }
 
@@ -75,7 +80,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
                 logsList = value;
                 OnPropertyChanged("LogsList");
 
-                
+
             }
         }
 
@@ -83,48 +88,45 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         {
             get
             {
-                return _selectedPath;
+                return selectedPath;
             }
             set
             {
-                _selectedPath = value;
-                _excelDataReader = new ExcelFileLoaderService(SelectedPath);
+                selectedPath = value;
+                excelDataReader = new ExcelFileLoaderService(SelectedPath);
 
-                if (IsSelectedFileExcel())
-                {
-                    OnPropertyChanged("SelectedPath");
+                OnPropertyChanged("SelectedPath");
 
-                    GetExcelData(SelectedPath);
-                }
+                GetExcelData(SelectedPath);
             }
         }
 
         public string SelectedPathStudentsResults
         {
-            get { return _selectedPathStudentsResults; }
+            get { return selectedPathStudentsResults; }
             set
             {
-                _selectedPathStudentsResults = value;
+                selectedPathStudentsResults = value;
                 OnPropertyChanged("SelectedPathStudentsResults");
             }
         }
 
         public string SelectedPathLogs
         {
-            get { return _selectedPathLogs; }
+            get { return selectedPathLogs; }
             set
             {
-                _selectedPathLogs = value;
+                selectedPathLogs = value;
                 OnPropertyChanged("SelectedPathLogs");
             }
         }
 
         public bool IsStudentsPathSelected
         {
-            get { return _isStudentsPathSelected; }
+            get { return isStudentsPathSelected; }
             set
             {
-                _isStudentsPathSelected = value;
+                isStudentsPathSelected = value;
                 OnPropertyChanged("IsStudentsPathSelected");
 
                 AreBothPathsSelected = IsStudentsPathSelected && IsLogsPathSelected ? true : false;
@@ -133,10 +135,10 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         public bool IsLogsPathSelected
         {
-            get { return _isLogsPathSelected; }
+            get { return isLogsPathSelected; }
             set
             {
-                _isLogsPathSelected = value;
+                isLogsPathSelected = value;
                 OnPropertyChanged("IsLogsPathSelected");
 
                 AreBothPathsSelected = IsStudentsPathSelected && IsLogsPathSelected ? true : false;
@@ -145,23 +147,40 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         public bool AreBothPathsSelected
         {
-            get { return _areBothPathsSelected; }
+            get { return areBothPathsSelected; }
             set
             {
-                _areBothPathsSelected = value;
+                areBothPathsSelected = value;
                 OnPropertyChanged("AreBothPathsSelected");
+
+                UpdateCommands();
+
+                if (AreBothPathsSelected)
+                    CalculationButtonText = "Калкулирай";
             }
         }
 
+        public string CalculationButtonText
+        {
+            get { return calculationButtonText; }
+            set
+            {
+                calculationButtonText = value;
+                OnPropertyChanged("CalculationButtonText");
+            }
+        }
+        #endregion
+
+        #region Commands
         public AsyncCommand SearchFileCommand
         {
             get
             {
-                if (_searchFileCommand == null)
+                if (searchFileCommand == null)
                 {
-                    _searchFileCommand = new AsyncCommand(ExecuteOpenFileDialogAsync, CanExecuteOpenFileDialog);
+                    searchFileCommand = new AsyncCommand(ExecuteOpenFileDialogAsync, CanExecuteOpenFileDialog);
                 }
-                return _searchFileCommand;
+                return searchFileCommand;
             }
         }
 
@@ -169,27 +188,29 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         {
             get
             {
-                if(_calculateCommand == null)
+                if (calculateCommand == null)
                 {
-                    _calculateCommand = new RelayCommand(CalculateStatistics, CanExecuteCalculateStatistics);
+                    calculateCommand = new RelayCommand(CalculateStatistics, CanExecuteCalculateStatistics);
                 }
-                return _calculateCommand;
+                return calculateCommand;
             }
         }
+        #endregion
 
+        #region Methods
         private void GetExcelData(string path)
         {
             ExcelFileLoaderService _excelDataReader = new ExcelFileLoaderService(path);
 
             if (IsTableStudentsResults())
             {
-                StudentsList = _excelDataReader.StudentListFromExcelTable();
+                StudentsList = _excelDataReader.GetStudentListFromExcelTable();
                 SelectedPathStudentsResults = "..." + SelectedPath[^37..];
                 IsStudentsPathSelected = true;
             }
             else
             {
-                LogsList = _excelDataReader.LogListFromExcelTable();
+                LogsList = _excelDataReader.GetLogListFromExcelTable();
                 SelectedPathLogs = "..." + SelectedPath[^38..];
                 IsLogsPathSelected = true;
             }
@@ -197,19 +218,27 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         private bool IsTableStudentsResults()
         {
-            bool test = _excelDataReader.GetTableType() == (int)TableTypeEnum.StudentsResultTable;
-            return test;
+            return excelDataReader.GetTableType() == (int)TableTypeEnum.StudentsResultTable;
         }
 
-        private bool IsSelectedFileExcel()
+        private bool IsSelectedFileExcel(string path)
         {
-            return _excelDataReader.IsFileExcel(SelectedPath);
+            return excelDataReader.IsFileExcel(path);
+        }
+
+        public void SendListsToSubscribedViewModels(string test)
+        {
+            SingletonClass.TestEventAggregator.GetEvent<GetFrequencyDistributionResultEvent>().Publish(frequencyResult);
+            SingletonClass.TestEventAggregator.GetEvent<GetCentralTendencyResultEvent>().Publish(tendencyResult);
+            SingletonClass.TestEventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Publish(dispersionResult);
+            SingletonClass.TestEventAggregator.GetEvent<GetCorrelationAnalysisEvent>().Publish(correlationResult);
         }
 
         private async Task ExecuteOpenFileDialogAsync()
         {
             var result = await FilePicker.PickAsync();
-            SelectedPath = result.FullPath;
+            if (IsSelectedFileExcel(result.FullPath))
+                SelectedPath = result.FullPath;
         }
 
         private bool CanExecuteOpenFileDialog()
@@ -217,44 +246,54 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             return true;
         }
 
-        public void SendLists(string test)
-        {
-            //if (SelectedPath != null)
-            //{
-            //    SingletonClass.TestEventAggregator.GetEvent<GetStudentsResultsListEvent>().Publish(StudentsList);
-            //    SingletonClass.TestEventAggregator.GetEvent<GetLogsListEvent>().Publish(LogsList);
-            //}
-
-            //////Loading on Calculate click
-            //SingletonClass.TestEventAggregator.GetEvent<GetFrequencyDistributionResultEvent>().Publish(frequencyResult);
-
-            SingletonClass.TestEventAggregator.GetEvent<GetCentralTendencyResultEvent>().Publish(tendencyResult);
-            SingletonClass.TestEventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Publish(dispersionResult);
-            SingletonClass.TestEventAggregator.GetEvent<GetCorrelationAnalysisEvent>().Publish(correlationResult);
-        }
-
         private void CalculateStatistics(object o)
         {
-            //_frequencyOfViewedCoursesService = new FrequencyOfViewedCoursesService(LogsList);
-            //frequencyResult = _frequencyOfViewedCoursesService.GetResults();
-            SelectedPathStudentsResults = "CALCULATION STARTED";
+            List<double> studentIds = ExtractAllStudentsFromLogs();
 
-            _centralTendencyOfViewedCoursesByUsersService = new CentralTendencyOfViewedCoursesByUsersService(StudentsList, LogsList);
-            tendencyResult = _centralTendencyOfViewedCoursesByUsersService.GetResults();
+            frequencyOfViewedCoursesService = new FrequencyOfViewedCoursesService(LogsList, studentIds);
+            frequencyResult = frequencyOfViewedCoursesService.GetResults();
 
-            _dispersionOfViewedCoursesService = new DispersionOfViewedCoursesService(LogsList);
-            dispersionResult = _dispersionOfViewedCoursesService.GetResults();
+            centralTendencyOfViewedCoursesByUsersService = new CentralTendencyOfViewedCoursesByUsersService(StudentsList, LogsList);
+            tendencyResult = centralTendencyOfViewedCoursesByUsersService.GetResults();
 
-            _correlationAnalysisOfEditedWikisService = new CorrelationAnalysisOfEditedWikisService(StudentsList, LogsList);
-            correlationResult = _correlationAnalysisOfEditedWikisService.GetResults();
+            dispersionOfViewedCoursesService = new DispersionOfViewedCoursesService(LogsList, studentIds);
+            dispersionResult = dispersionOfViewedCoursesService.GetResults();
 
-            SelectedPathStudentsResults = "CALCULATION FINISHED";
+            correlationAnalysisOfEditedWikisService = new CorrelationAnalysisOfEditedWikisService(StudentsList, LogsList);
+            correlationResult = correlationAnalysisOfEditedWikisService.GetResults();
+
+            CalculationButtonText = "Резултатите са калкулирани";
+            AreBothPathsSelected = false;
+
+            SendListsToSubscribedViewModels("");
         }
 
         private bool CanExecuteCalculateStatistics(object o)
         {
-            return true;
+            return AreBothPathsSelected;
         }
 
+        private List<double> ExtractAllStudentsFromLogs()
+        {
+            List<double> studentIds = new List<double>();
+            double studentId;
+
+            foreach (Log log in LogsList)
+            {
+                studentId = Double.Parse(log.Description.Substring(18, 4));
+                if (!studentIds.Contains(studentId))
+                {
+                    studentIds.Add(studentId);
+                }
+            }
+
+            return studentIds;
+        }
+
+        private void UpdateCommands()
+        {
+            CalculateCommand.RaiseCanExecuteChanged();
+        } 
+        #endregion
     }
 }
