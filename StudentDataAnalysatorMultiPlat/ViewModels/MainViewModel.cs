@@ -1,4 +1,5 @@
-﻿using StudentDataAnalysatorMultiPlat.Commands;
+﻿using DatasetAnalysator.CalculationServices;
+using StudentDataAnalysatorMultiPlat.Commands;
 using StudentDataAnalysatorMultiPlat.Events;
 using StudentDataAnalysatorMultiPlat.Models;
 using StudentDataAnalysatorMultiPlat.Services.CalculationServices;
@@ -248,15 +249,15 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         private void CalculateStatistics(object o)
         {
-            List<double> studentIds = ExtractAllStudentsFromLogs();
+            LogDataHelper logDataHelper = new LogDataHelper(LogsList);
 
-            frequencyOfViewedCoursesService = new FrequencyOfViewedCoursesService(LogsList, studentIds);
+            frequencyOfViewedCoursesService = new FrequencyOfViewedCoursesService(logDataHelper);
             frequencyResult = frequencyOfViewedCoursesService.GetResults();
 
             centralTendencyOfViewedCoursesByUsersService = new CentralTendencyOfViewedCoursesByUsersService(StudentsList, LogsList);
             tendencyResult = centralTendencyOfViewedCoursesByUsersService.GetResults();
 
-            dispersionOfViewedCoursesService = new DispersionOfViewedCoursesService(LogsList, studentIds);
+            dispersionOfViewedCoursesService = new DispersionOfViewedCoursesService(logDataHelper);
             dispersionResult = dispersionOfViewedCoursesService.GetResults();
 
             correlationAnalysisOfEditedWikisService = new CorrelationAnalysisOfEditedWikisService(StudentsList, LogsList);
@@ -273,22 +274,6 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             return AreBothPathsSelected;
         }
 
-        private List<double> ExtractAllStudentsFromLogs()
-        {
-            List<double> studentIds = new List<double>();
-            double studentId;
-
-            foreach (Log log in LogsList)
-            {
-                studentId = Double.Parse(log.Description.Substring(18, 4));
-                if (!studentIds.Contains(studentId))
-                {
-                    studentIds.Add(studentId);
-                }
-            }
-
-            return studentIds;
-        }
 
         private void UpdateCommands()
         {

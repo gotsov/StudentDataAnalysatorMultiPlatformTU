@@ -1,4 +1,5 @@
-﻿using StudentDataAnalysatorMultiPlat.DatasetServices;
+﻿using DatasetAnalysator.CalculationServices;
+using StudentDataAnalysatorMultiPlat.DatasetServices;
 using StudentDataAnalysatorMultiPlat.Models;
 using System;
 using System.Collections.Generic;
@@ -12,62 +13,28 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
     public class FrequencyOfViewedCoursesService
     {
         private ObservableCollection<FrequencyDistributionResult> frequencyResult;
-        private ObservableCollection<Log> logsList;
-        private List<double> studentIds;
-        private Dictionary<double, int> studentCoursesViewedDict;
         private SortedDictionary<int, int> frequencyViewedCoursesDict;
+        private LogDataHelper logHelper;
 
-        public FrequencyOfViewedCoursesService(ObservableCollection<Log> logsList, List<double> studentIds)
+        public FrequencyOfViewedCoursesService(LogDataHelper logHelper)
         {
-            this.logsList = logsList;
-            this.studentIds = studentIds;
+            this.logHelper = logHelper;
 
             frequencyResult = new ObservableCollection<FrequencyDistributionResult>();
-            studentCoursesViewedDict = new Dictionary<double, int>();
             frequencyViewedCoursesDict = new SortedDictionary<int, int>();
         }
 
         public ObservableCollection<FrequencyDistributionResult>  GetResults()
         {
-            //ExtractAllStudentsFromLogs();
-            FillDictionaryWithCoursesViewedData();
-            FillFrequencyOfViewedCourses();
+            Dictionary<double, int> studentCoursesViewedDict = logHelper.CreateDictionaryWithCoursesViewed();
+
+            FillFrequencyOfViewedCourses(studentCoursesViewedDict);
             CalculateFrequencyDistributionResult();
 
             return frequencyResult;
         }
 
-        //private void ExtractAllStudentsFromLogs()
-        //{
-        //    double studentId;
-        //    foreach (Log log in logsList)
-        //    {
-        //        studentId = Double.Parse(log.Description.Substring(18, 4));
-        //        if (!studentIds.Contains(studentId))
-        //        {
-        //            studentIds.Add(studentId);
-        //        }
-        //    }
-        //}
-
-        private void FillDictionaryWithCoursesViewedData()
-        {
-            int coursesViewed;
-            foreach (double id in studentIds)
-            {
-                coursesViewed = 0;
-                foreach (Log log in logsList)
-                {
-                    if (log.Description.Contains(id.ToString()) && log.EventName == "Course viewed")
-                    {
-                        coursesViewed++;
-                        studentCoursesViewedDict[id] = coursesViewed;
-                    }
-                }
-            }
-        }
-
-        private void FillFrequencyOfViewedCourses()
+        private void FillFrequencyOfViewedCourses(Dictionary<double, int> studentCoursesViewedDict)
         {
             Dictionary<int, int> UnsortedFrequencies = new Dictionary<int, int>();
             int studentsCount;
