@@ -218,7 +218,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         private bool IsTableStudentsResults()
         {
-            return excelDataReader.GetTableType() == (int)TableTypeEnum.StudentsResultTable;
+            return excelDataReader.IsTableStudentsResults();
         }
 
         private bool IsSelectedFileExcel(string path)

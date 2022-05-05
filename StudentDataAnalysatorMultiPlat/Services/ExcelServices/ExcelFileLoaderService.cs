@@ -61,5 +61,10 @@ namespace StudentDataAnalysatorMultiPlat.Services.ExcelServices
             return service.LogsList;
         }
 
+        public bool IsTableStudentsResults()
+        {
+            return GetTableType() == (int)TableTypeEnum.StudentsResultTable;
+        }
+
     }
 }
