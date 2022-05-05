@@ -29,25 +29,12 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
 
         public ObservableCollection<StatisticalDispersionResult> GetResults()
         {
-            //ExtractAllStudentsFromLogs();
             FillDictionaryWithCoursesViewedData();
             FillCountOfViewedCoursesByStudents();
             CalculateDispersionResult();
 
             return dispersionResult;
         }
-        //private void ExtractAllStudentsFromLogs()
-        //{
-        //    double studentId;
-        //    foreach (Log log in logsList)
-        //    {
-        //        studentId = Double.Parse(log.Description.Substring(18, 4));
-        //        if (!studentIds.Contains(studentId))
-        //        {
-        //            studentIds.Add(studentId);
-        //        }
-        //    }
-        //}
         private void FillDictionaryWithCoursesViewedData()
         {
             int coursesViewed;

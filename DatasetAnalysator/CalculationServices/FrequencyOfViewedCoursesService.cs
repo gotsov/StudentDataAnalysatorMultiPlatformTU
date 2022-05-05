@@ -29,26 +29,12 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
 
         public ObservableCollection<FrequencyDistributionResult>  GetResults()
         {
-            //ExtractAllStudentsFromLogs();
             FillDictionaryWithCoursesViewedData();
             FillFrequencyOfViewedCourses();
             CalculateFrequencyDistributionResult();
 
             return frequencyResult;
         }
-
-        //private void ExtractAllStudentsFromLogs()
-        //{
-        //    double studentId;
-        //    foreach (Log log in logsList)
-        //    {
-        //        studentId = Double.Parse(log.Description.Substring(18, 4));
-        //        if (!studentIds.Contains(studentId))
-        //        {
-        //            studentIds.Add(studentId);
-        //        }
-        //    }
-        //}
 
         private void FillDictionaryWithCoursesViewedData()
         {

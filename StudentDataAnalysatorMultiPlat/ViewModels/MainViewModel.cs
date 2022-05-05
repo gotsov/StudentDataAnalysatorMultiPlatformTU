@@ -1,4 +1,5 @@
-﻿using StudentDataAnalysatorMultiPlat.Commands;
+﻿using DatasetAnalysator.CalculationServices;
+using StudentDataAnalysatorMultiPlat.Commands;
 using StudentDataAnalysatorMultiPlat.Events;
 using StudentDataAnalysatorMultiPlat.Models;
 using StudentDataAnalysatorMultiPlat.Services.CalculationServices;
@@ -248,7 +249,8 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         private void CalculateStatistics(object o)
         {
-            List<double> studentIds = ExtractAllStudentsFromLogs();
+            ExtractStudentsFromLogsUtil.ExtractAllStudentsFromLogs(LogsList);
+            List<double> studentIds = ExtractStudentsFromLogsUtil.StudentsIds;
 
             frequencyOfViewedCoursesService = new FrequencyOfViewedCoursesService(LogsList, studentIds);
             frequencyResult = frequencyOfViewedCoursesService.GetResults();
@@ -271,23 +273,6 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         private bool CanExecuteCalculateStatistics(object o)
         {
             return AreBothPathsSelected;
-        }
-
-        private List<double> ExtractAllStudentsFromLogs()
-        {
-            List<double> studentIds = new List<double>();
-            double studentId;
-
-            foreach (Log log in LogsList)
-            {
-                studentId = Double.Parse(log.Description.Substring(18, 4));
-                if (!studentIds.Contains(studentId))
-                {
-                    studentIds.Add(studentId);
-                }
-            }
-
-            return studentIds;
         }
 
         private void UpdateCommands()
