@@ -10,16 +10,18 @@ using static StudentDataAnalysatorMultiPlat.Enums.Enums;
 
 namespace StudentDataAnalysatorMultiPlat.Services.ExcelServices
 {
-    public class ExcelFileLoaderService
+    public class ExcelDataReaderService
     {
         private string path;
+        StudentsResultsExcelReaderService studentsExcelReaderService = new StudentsResultsExcelReaderService();
+        StudentsLogsExcelReaderSerivice logsExcelReaderService = new StudentsLogsExcelReaderSerivice();
 
-        public ExcelFileLoaderService()
+        public ExcelDataReaderService()
         {
 
         }
 
-        public ExcelFileLoaderService(string path)
+        public ExcelDataReaderService(string path)
         {
             this.path = path;
         }
@@ -47,18 +49,16 @@ namespace StudentDataAnalysatorMultiPlat.Services.ExcelServices
 
         public ObservableCollection<Student> GetStudentListFromExcelTable()
         {
-            StudentsResultsExcelReaderService service = new StudentsResultsExcelReaderService();
-            service.ReadExcel(path);
+            studentsExcelReaderService.ReadExcel(path);
 
-            return service.StudentsList;
+            return studentsExcelReaderService.StudentsList;
         }
 
         public ObservableCollection<Log> GetLogListFromExcelTable()
         {
-            StudentsLogsExcelReaderSerivice service = new StudentsLogsExcelReaderSerivice();
-            service.ReadExcel(path);
+            logsExcelReaderService.ReadExcel(path);
 
-            return service.LogsList;
+            return logsExcelReaderService.LogsList;
         }
 
         public bool IsTableStudentsResults()

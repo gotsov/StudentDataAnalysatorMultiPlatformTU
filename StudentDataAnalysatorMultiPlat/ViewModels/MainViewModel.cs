@@ -25,7 +25,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         private bool areBothPathsSelected;
         private string calculationButtonText;
 
-        private ExcelFileLoaderService excelDataReader = new ExcelFileLoaderService();
+        private Services.ExcelServices.ExcelDataReaderService excelDataReader = new Services.ExcelServices.ExcelDataReaderService();
         private CentralTendencyOfViewedCoursesByUsersService centralTendencyOfViewedCoursesByUsersService;
         private DispersionOfViewedCoursesService dispersionOfViewedCoursesService;
         private FrequencyOfViewedCoursesService frequencyOfViewedCoursesService;
@@ -93,7 +93,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             set
             {
                 selectedPath = value;
-                excelDataReader = new ExcelFileLoaderService(SelectedPath);
+                excelDataReader = new Services.ExcelServices.ExcelDataReaderService(SelectedPath);
 
                 OnPropertyChanged("SelectedPath");
 
@@ -200,7 +200,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         #region Methods
         private void GetExcelData(string path)
         {
-            ExcelFileLoaderService _excelDataReader = new ExcelFileLoaderService(path);
+            Services.ExcelServices.ExcelDataReaderService _excelDataReader = new Services.ExcelServices.ExcelDataReaderService(path);
 
             if (IsTableStudentsResults())
             {

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="StudentDataAnalysatorMultiPlat.MainPage" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StudentDataAnalysatorMultiPlat.ViewModels.MainViewModel">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <Members>
+      <Field Name="areBothPathsSelected" Hidden="true" />
+      <Property Name="AreBothPathsSelected" Hidden="true" />
+      <Field Name="calculateCommand" Hidden="true" />
+      <Property Name="CalculateCommand" Hidden="true" />
+      <Field Name="calculationButtonText" Hidden="true" />
+      <Property Name="CalculationButtonText" Hidden="true" />
+      <Method Name="CanExecuteCalculateStatistics" Hidden="true" />
+      <Method Name="CanExecuteOpenFileDialog" Hidden="true" />
+      <Field Name="centralTendencyOfViewedCoursesByUsersService" Hidden="true" />
+      <Field Name="correlationAnalysisOfEditedWikisService" Hidden="true" />
+      <Field Name="correlationResult" Hidden="true" />
+      <Field Name="dispersionOfViewedCoursesService" Hidden="true" />
+      <Field Name="dispersionResult" Hidden="true" />
+      <Method Name="ExecuteOpenFileDialogAsync" Hidden="true" />
+      <Method Name="ExtractAllStudentsFromLogs" Hidden="true" />
+      <Field Name="isLogsPathSelected" Hidden="true" />
+      <Property Name="IsLogsPathSelected" Hidden="true" />
+      <Method Name="IsSelectedFileExcel" Hidden="true" />
+      <Field Name="isStudentsPathSelected" Hidden="true" />
+      <Property Name="IsStudentsPathSelected" Hidden="true" />
+      <Method Name="IsTableStudentsResults" Hidden="true" />
+      <Method Name="MainViewModel" Hidden="true" />
+      <Field Name="searchFileCommand" Hidden="true" />
+      <Property Name="SearchFileCommand" Hidden="true" />
+      <Field Name="selectedPath" Hidden="true" />
+      <Property Name="SelectedPath" Hidden="true" />
+      <Field Name="selectedPathLogs" Hidden="true" />
+      <Property Name="SelectedPathLogs" Hidden="true" />
+      <Field Name="selectedPathStudentsResults" Hidden="true" />
+      <Property Name="SelectedPathStudentsResults" Hidden="true" />
+      <Field Name="studentsList" Hidden="true" />
+      <Property Name="StudentsList" Hidden="true" />
+      <Field Name="tendencyResult" Hidden="true" />
+      <Method Name="UpdateCommands" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>gCAAgEAgACIQBDQiAAQsMKAYAAAoIBQaAAAgEFAAAIA=</HashCode>
+      <FileName>ViewModels\MainViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="excelDataReader" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StudentDataAnalysatorMultiPlat.Services.ExcelServices.ExcelDataReaderService">
+    <Position X="5" Y="0.75" Width="2" />
+    <Members>
+      <Method Name="GetStudentListFromExcelTable" Hidden="true" />
+      <Method Name="IsFileExcel" Hidden="true" />
+      <Method Name="IsTableStudentsResults" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>iAAAAAAAAAAAAAAAAABCIAAAIAAAAAAAACAAAAAAEAA=</HashCode>
+      <FileName>Services\ExcelServices\ExcelDataReaderService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logsExcelReaderService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="StudentDataAnalysatorMultiPlat.Services.CalculationServices.FrequencyOfViewedCoursesService" Collapsed="true">
+    <Position X="12" Y="3.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>CAAAAEAAACIAAAAgAgAAAABAAAAAAIAAAAAAAAAABAA=</HashCode>
+      <FileName>Services\CalculationServices\FrequencyOfViewedCoursesService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StudentDataAnalysatorMultiPlat.Models.Log" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>gAABAIAAAAAgAAAAIAAAAAAAAIAAAACAAABAAAAAQQA=</HashCode>
+      <FileName>Models\Log.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StudentDataAnalysatorMultiPlat.Models.FrequencyDistributionResult" Collapsed="true">
+    <Position X="11.5" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAASAAAAEAAAAAAAAAACAAAAAIAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FrequencyDistributionResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StudentDataAnalysatorMultiPlat.ViewModels.FrequencyDistributionViewModel">
+    <Position X="8.25" Y="5.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAIAAAgAA=</HashCode>
+      <FileName>ViewModels\FrequencyDistributionViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StudentDataAnalysatorMultiPlat.DatasetServices.FrequencyDistributionCalculator">
+    <Position X="4.75" Y="6.25" Width="2.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="StudentDataAnalysatorMultiPlat.Services.ExcelServices.StudentsLogsExcelReaderSerivice">
+    <Position X="9" Y="1" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ExcelServices\StudentsLogsExcelReaderSerivice.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
