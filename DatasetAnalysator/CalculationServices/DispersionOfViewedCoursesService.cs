@@ -1,5 +1,4 @@
-﻿using DatasetAnalysator.CalculationServices;
-using StudentDataAnalysatorMultiPlat.DatasetServices;
+﻿using StudentDataAnalysatorMultiPlat.DatasetServices;
 using StudentDataAnalysatorMultiPlat.Models;
 using System;
 using System.Collections.Generic;

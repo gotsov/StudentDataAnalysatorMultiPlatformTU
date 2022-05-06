@@ -1,4 +1,5 @@
-﻿using StudentDataAnalysatorMultiPlat.DatasetServices;
+﻿using DatasetAnalysator.Helpers;
+using StudentDataAnalysatorMultiPlat.DatasetServices;
 using StudentDataAnalysatorMultiPlat.Models;
 using System;
 using System.Collections.Generic;
@@ -12,88 +13,55 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
     public class CentralTendencyOfViewedCoursesByUsersService
     {
         private ObservableCollection<CentralTendencyResult> tendencyResult;
-        private ObservableCollection<Student> studentsList;
-        private ObservableCollection<Log> logsList;
         private Dictionary<double, int> studentCoursesViewedDict;
+        private CentralTendencyCalculator centralTendencyCalculator;
 
-        public CentralTendencyOfViewedCoursesByUsersService(ObservableCollection<Student> studentsList, ObservableCollection<Log> logsList)
+        public CentralTendencyOfViewedCoursesByUsersService(Dictionary<double, int> studentCoursesViewedDict , CentralTendencyCalculator centralTendencyCalculator)
         {
-            this.studentsList = studentsList;
-            this.logsList = logsList;
-
+            this.studentCoursesViewedDict = studentCoursesViewedDict;
+            this.centralTendencyCalculator = centralTendencyCalculator;
             tendencyResult = new ObservableCollection<CentralTendencyResult>();
-            studentCoursesViewedDict = new Dictionary<double, int>();
         }
 
         public ObservableCollection<CentralTendencyResult> GetResults()
         {
-            FillDictionaryWithCoursesViewedData();
-
-            List<double> coursesViewedByUser = SetListToCalculateTendencies();
+            List<double> coursesViewedByUser = CreateListFromCoursesViewed(studentCoursesViewedDict);
 
             CalculateCentralTendencyResult(coursesViewedByUser);
 
             return tendencyResult;
         }
 
-        private void CalculateCentralTendencyResult(List<double> results)
+
+        private List<double> CreateListFromCoursesViewed(Dictionary<double, int> studentCoursesViewedDict)
         {
-            double median = CentralTendencyCalculator.GetMedian(results);
-            double average = Math.Round(CentralTendencyCalculator.GetAverage(results), 2);
-
-            string modesToString = MergeModesToOneString(results);
-
-            tendencyResult.Add(new CentralTendencyResult(median, modesToString, average));
-        }
-
-        private string MergeModesToOneString(List<double> results)
-        {
-            List<double> modes = CentralTendencyCalculator.GetMode(results);
-            string modesToString = "";
-
-            if (modes.Count() > 1)
-            {
-                modesToString += modes[0].ToString();
-                modes.RemoveAt(0);
-
-                foreach (double mode in modes)
-                {
-                    modesToString += ", " + mode.ToString();
-                }
-            }
-            else
-                modesToString += modes[0];
-
-            return modesToString;
-        }
-
-        private void FillDictionaryWithCoursesViewedData()
-        {
-            int count;
-            foreach (var student in studentsList)
-            {
-                count = 0;
-                foreach (var log in logsList)
-                {
-                    if (log.Description.Contains(student.Id.ToString()) && log.EventName == "Course viewed")
-                    {
-                        count++;
-                        studentCoursesViewedDict[student.Id] = count;
-                    }
-                }
-            }
-        }
-
-        private List<double> SetListToCalculateTendencies()
-        {
-            List<double> result = new List<double>();
+            List<double> coursesViewedList = new List<double>();
 
             foreach (int coursesViewed in studentCoursesViewedDict.Values)
             {
-                result.Add(coursesViewed);
+                coursesViewedList.Add(coursesViewed);
             }
 
-            return result;
+            return coursesViewedList;
         }
+
+        private void CalculateCentralTendencyResult(List<double> results)
+        {
+            double median = centralTendencyCalculator.GetMedian(results);
+            double average = Math.Round(centralTendencyCalculator.GetAverage(results), 2);
+
+            List<double> modes = centralTendencyCalculator.GetMode(results);
+
+            if (!modes.Any())
+            {
+                throw new InvalidOperationException("Mode list is empty");
+            }
+
+            string mergedModes = String.Join(",", modes.ToArray());
+
+
+            tendencyResult.Add(new CentralTendencyResult(median, mergedModes, average));
+        }
+
     }
 }

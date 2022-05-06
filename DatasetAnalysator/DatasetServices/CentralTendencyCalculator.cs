@@ -8,7 +8,7 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
 {
     public class CentralTendencyCalculator
     {
-        public static double GetMedian(List<double> list)
+        public virtual double GetMedian(List<double> list)
         {
             int size = list.Count;
             int mid = size / 2;
@@ -16,7 +16,7 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
             return median;
         }
 
-        public static List<Double> GetMode(List<double> list)
+        public virtual List<Double> GetMode(List<double> list)
         {
             int maxcount = list.GroupBy(i => i).Max(grp => grp.Count());
             List<double> modeList = list.GroupBy(i => i).Where(grp => grp.Count() == maxcount).Select(grp => grp.Key).ToList();
@@ -27,7 +27,7 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
             return modeList;
         }
 
-        public static double GetAverage(List<double> list)
+        public virtual double GetAverage(List<double> list)
         {
             return list.Average(r => r);
         }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatasetAnalysator.CalculationServices
+namespace DatasetAnalysator.Helpers
 {
     public class LogDataHelper
     {
@@ -27,7 +27,7 @@ namespace DatasetAnalysator.CalculationServices
 
             foreach (Log log in logsList)
             {
-                studentId = Double.Parse(log.Description.Substring(18, 4));
+                studentId = double.Parse(log.Description.Substring(18, 4));
                 if (!studentIds.Contains(studentId))
                 {
                     studentIds.Add(studentId);
@@ -37,9 +37,9 @@ namespace DatasetAnalysator.CalculationServices
             return studentIds;
         }
 
-        public Dictionary<double, int> CreateDictionaryWithCoursesViewed()
+        public Dictionary<double, int> CreateDictionaryWithCoursesViewedFromLog()
         {
-            Dictionary<double, int> coursesViewedDict= new Dictionary<double, int>();
+            Dictionary<double, int> coursesViewedDict = new Dictionary<double, int>();
             int coursesViewed;
             foreach (double id in studentIds)
             {
