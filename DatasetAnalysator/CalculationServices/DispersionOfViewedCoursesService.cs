@@ -14,18 +14,19 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
     {
         private ObservableCollection<StatisticalDispersionResult> dispersionResult;
         private List<int> coursesViewedByEachStudent;
-        private LogDataHelper logHelper;
+        Dictionary<double, int> studentCoursesViewedDict;
+        private StatisticalDispersionCalculator statisticalDispersionCalculator;
 
-        public DispersionOfViewedCoursesService(LogDataHelper logHelper)
+        public DispersionOfViewedCoursesService(Dictionary<double, int> studentCoursesViewedDict, StatisticalDispersionCalculator statisticalDispersionCalculator)
         {
-            this.logHelper = logHelper;
+            this.statisticalDispersionCalculator = statisticalDispersionCalculator;
+            this.studentCoursesViewedDict = studentCoursesViewedDict;
             dispersionResult = new ObservableCollection<StatisticalDispersionResult>();
             coursesViewedByEachStudent = new List<int>();
         }
 
         public ObservableCollection<StatisticalDispersionResult> GetResults()
         {
-            Dictionary<double, int> studentCoursesViewedDict = logHelper.CreateDictionaryWithCoursesViewed();
             FillCountOfViewedCoursesByStudents(studentCoursesViewedDict);
             CalculateDispersionResult();
 
@@ -44,10 +45,11 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
         {
             int minMaxDispersion;
             double variance, standartDeviation;
-            minMaxDispersion = StatisticalDispersionCalculator.CalculateMinMaxDispersion(coursesViewedByEachStudent);
-            variance = StatisticalDispersionCalculator.CalculateVariance(coursesViewedByEachStudent);
-            standartDeviation = StatisticalDispersionCalculator.CalculateStandartDeviation(coursesViewedByEachStudent);
+            minMaxDispersion = statisticalDispersionCalculator.CalculateMinMaxDispersion(coursesViewedByEachStudent);
+            variance = statisticalDispersionCalculator.CalculateVariance(coursesViewedByEachStudent);
+            standartDeviation = statisticalDispersionCalculator.CalculateStandartDeviation(coursesViewedByEachStudent);
             dispersionResult.Add(new StatisticalDispersionResult(minMaxDispersion, Math.Round(variance, 2), Math.Round(standartDeviation, 2)));
         }
     }
 }
+

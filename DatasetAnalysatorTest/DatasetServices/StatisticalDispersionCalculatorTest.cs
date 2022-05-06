@@ -11,6 +11,14 @@ namespace DatasetAnalysatorTest.DatasetServices
     [TestClass]
     public class StatisticalDispersionCalculatorTest
     {
+        private StatisticalDispersionCalculator statisticalDispersionCalculator;
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            statisticalDispersionCalculator = new StatisticalDispersionCalculator();
+        }
+
         [TestMethod]
         public void TestCalculateMinMaxDispersion()
         {
@@ -20,7 +28,7 @@ namespace DatasetAnalysatorTest.DatasetServices
                     };
             double expectedDispersion = 10;
 
-            double actualDispersion = StatisticalDispersionCalculator.CalculateMinMaxDispersion(x);
+            double actualDispersion = statisticalDispersionCalculator.CalculateMinMaxDispersion(x);
             Assert.AreEqual(expectedDispersion, actualDispersion);
         }
         [TestMethod]
@@ -32,7 +40,7 @@ namespace DatasetAnalysatorTest.DatasetServices
                     };
             double expectedVariance = 177.2;
 
-            double actualVariance = StatisticalDispersionCalculator.CalculateVariance(x);
+            double actualVariance = statisticalDispersionCalculator.CalculateVariance(x);
             Assert.AreEqual(expectedVariance, actualVariance);
         }
 
@@ -45,7 +53,7 @@ namespace DatasetAnalysatorTest.DatasetServices
                     };
             double expectedDeviation = 13.31;
 
-            double actualDeviation = StatisticalDispersionCalculator.CalculateStandartDeviation(x);
+            double actualDeviation = statisticalDispersionCalculator.CalculateStandartDeviation(x);
             Assert.AreEqual(expectedDeviation, Math.Round(actualDeviation, 2));
         }
 
