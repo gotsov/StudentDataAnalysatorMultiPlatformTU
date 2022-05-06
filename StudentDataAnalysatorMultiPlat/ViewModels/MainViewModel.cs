@@ -1,5 +1,6 @@
 ﻿using DatasetAnalysator.CalculationServices;
 using StudentDataAnalysatorMultiPlat.Commands;
+using StudentDataAnalysatorMultiPlat.DatasetServices;
 using StudentDataAnalysatorMultiPlat.Events;
 using StudentDataAnalysatorMultiPlat.Models;
 using StudentDataAnalysatorMultiPlat.Services.CalculationServices;
@@ -250,6 +251,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         private void CalculateStatistics(object o)
         {
             LogDataHelper logDataHelper = new LogDataHelper(LogsList);
+            Dictionary<double, int> studentCoursesViewedDict = logDataHelper.CreateDictionaryWithCoursesViewed();
 
             frequencyOfViewedCoursesService = new FrequencyOfViewedCoursesService(logDataHelper);
             frequencyResult = frequencyOfViewedCoursesService.GetResults();
@@ -257,7 +259,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             centralTendencyOfViewedCoursesByUsersService = new CentralTendencyOfViewedCoursesByUsersService(StudentsList, LogsList);
             tendencyResult = centralTendencyOfViewedCoursesByUsersService.GetResults();
 
-            dispersionOfViewedCoursesService = new DispersionOfViewedCoursesService(logDataHelper);
+            dispersionOfViewedCoursesService = new DispersionOfViewedCoursesService(studentCoursesViewedDict, new StatisticalDispersionCalculator());
             dispersionResult = dispersionOfViewedCoursesService.GetResults();
 
             correlationAnalysisOfEditedWikisService = new CorrelationAnalysisOfEditedWikisService(StudentsList, LogsList);
@@ -268,6 +270,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
             SendListsToSubscribedViewModels("");
         }
+
 
         private bool CanExecuteCalculateStatistics(object o)
         {

@@ -8,7 +8,7 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
 {
     public class StatisticalDispersionCalculator
     {
-        public static int CalculateMinMaxDispersion(List<int> CoursesViewedByEachStudent)
+        public virtual int CalculateMinMaxDispersion(List<int> CoursesViewedByEachStudent)
         {
             int minDispersion, maxDispersion, minMaxDispersion;
             minDispersion = CoursesViewedByEachStudent.Min();
@@ -16,7 +16,7 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
             minMaxDispersion = maxDispersion - minDispersion;
             return minMaxDispersion;
         }
-        public static double CalculateVariance(List<int> CoursesViewedByEachStudent)
+        public virtual double CalculateVariance(List<int> CoursesViewedByEachStudent)
         {
             double averageCountOfViewedCourses;
             averageCountOfViewedCourses = CoursesViewedByEachStudent.Average();
@@ -27,7 +27,7 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
             }
             return sumOfSquares / (double)(CoursesViewedByEachStudent.Count - 1);
         }
-        public static double CalculateStandartDeviation(List<int> CoursesViewedByEachStudent)
+        public virtual double CalculateStandartDeviation(List<int> CoursesViewedByEachStudent)
         {
             return Math.Sqrt(CalculateVariance(CoursesViewedByEachStudent));
         }
