@@ -12,9 +12,15 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
 {
     public class FrequencyOfViewedCoursesService
     {
-        private ObservableCollection<FrequencyDistributionResult> frequencyResult;
-        private SortedDictionary<int, int> frequencyViewedCoursesDict;
-        private LogDataHelper logHelper;
+        public LogDataHelper logHelper { get; set; }
+        public SortedDictionary<int, int> frequencyViewedCoursesDict { get; set; }
+        public ObservableCollection<FrequencyDistributionResult> frequencyResult { get; set; }
+
+        public FrequencyOfViewedCoursesService()
+        {
+            frequencyViewedCoursesDict = new SortedDictionary<int, int>();
+            frequencyResult = new ObservableCollection<FrequencyDistributionResult>();
+        }
 
         public FrequencyOfViewedCoursesService(LogDataHelper logHelper)
         {
@@ -34,7 +40,7 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
             return frequencyResult;
         }
 
-        private void FillFrequencyOfViewedCourses(Dictionary<double, int> studentCoursesViewedDict)
+        public void FillFrequencyOfViewedCourses(Dictionary<double, int> studentCoursesViewedDict)
         {
             Dictionary<int, int> UnsortedFrequencies = new Dictionary<int, int>();
             int studentsCount;
@@ -55,7 +61,7 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
             frequencyViewedCoursesDict = new SortedDictionary<int, int>(UnsortedFrequencies);
         }
 
-        private void CalculateFrequencyDistributionResult()
+        public void CalculateFrequencyDistributionResult()
         {
             int absoluteFrequency;
             double relativeFrequency, totalPercentage = 0;
