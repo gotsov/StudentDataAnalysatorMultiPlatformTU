@@ -53,6 +53,10 @@ namespace DatasetAnalysator.CalculationServices
                     }
                 }
             }
+            if (coursesViewedDict.Count == 0)
+            {
+                throw new InvalidOperationException("Dictionary contains no elements");
+            }
             return coursesViewedDict;
         }
 
