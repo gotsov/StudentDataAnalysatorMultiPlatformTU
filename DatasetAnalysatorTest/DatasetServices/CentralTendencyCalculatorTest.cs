@@ -10,6 +10,15 @@ namespace StudentDataAnalyserTests
 
     {
 
+        private CentralTendencyCalculator centralTendencyCalculator;
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            centralTendencyCalculator = new CentralTendencyCalculator();
+        }
+
+
         [TestMethod]
         public void TestGetMedian()
         {
@@ -19,7 +28,7 @@ namespace StudentDataAnalyserTests
                     };
             double expectedMedian = 4;
 
-            double actualMedian = CentralTendencyCalculator.GetMedian(input);
+            double actualMedian = centralTendencyCalculator.GetMedian(input);
 
             Assert.AreEqual(expectedMedian, actualMedian);
 
@@ -34,7 +43,7 @@ namespace StudentDataAnalyserTests
                     };
             double expectedMedian = 3;
 
-            double actualMedian = CentralTendencyCalculator.GetMedian(input);
+            double actualMedian = centralTendencyCalculator.GetMedian(input);
 
             Assert.AreEqual(expectedMedian, actualMedian);
 
@@ -49,7 +58,7 @@ namespace StudentDataAnalyserTests
                     };
             double expectedMedian = 4.5;
 
-            double actualMedian = CentralTendencyCalculator.GetMedian(input);
+            double actualMedian = centralTendencyCalculator.GetMedian(input);
 
             Assert.AreEqual(expectedMedian, actualMedian);
 
@@ -65,7 +74,7 @@ namespace StudentDataAnalyserTests
                     };
             var expectedMode = new List<double> { 3 };
 
-            List<double> actualMode = CentralTendencyCalculator.GetMode(input);
+            List<double> actualMode = centralTendencyCalculator.GetMode(input);
 
             CollectionAssert.AreEqual(expectedMode, actualMode);
 
@@ -81,7 +90,7 @@ namespace StudentDataAnalyserTests
                     };
             var expectedMode = new List<double> { 2, 5 };
 
-            List<double> actualMode = CentralTendencyCalculator.GetMode(input);
+            List<double> actualMode = centralTendencyCalculator.GetMode(input);
 
             CollectionAssert.AreEqual(expectedMode, actualMode);
 
@@ -96,7 +105,7 @@ namespace StudentDataAnalyserTests
                           1, 3, 5, 10, 12, 14, 20
                     };
 
-            CollectionAssert.AreEqual(new List<double>(), CentralTendencyCalculator.GetMode(input));
+            CollectionAssert.AreEqual(new List<double>(), centralTendencyCalculator.GetMode(input));
 
         }
 
@@ -108,7 +117,7 @@ namespace StudentDataAnalyserTests
                           10, 2, 38, 23, 38, 23, 21
                     };
 
-            double actualAverage = CentralTendencyCalculator.GetAverage(input);
+            double actualAverage = centralTendencyCalculator.GetAverage(input);
 
             Assert.AreEqual(22.14, Math.Round(actualAverage, 2));
 
@@ -122,7 +131,7 @@ namespace StudentDataAnalyserTests
                           10, 2, 38, 23, 38, 23, 21
                     };
 
-            double actualAverage = CentralTendencyCalculator.GetAverage(input);
+            double actualAverage = centralTendencyCalculator.GetAverage(input);
 
             Assert.AreEqual(22.14, Math.Round(actualAverage, 2));
 
@@ -137,7 +146,7 @@ namespace StudentDataAnalyserTests
                           15, 26, 39, 16,29
                     };
 
-            double actualAverage = CentralTendencyCalculator.GetAverage(input);
+            double actualAverage = centralTendencyCalculator.GetAverage(input);
 
             Assert.AreEqual(25, Math.Round(actualAverage, 2));
 
@@ -151,7 +160,7 @@ namespace StudentDataAnalyserTests
                           6, 40, 32, 5, 12, 24
                     };
 
-            double actualAverage = CentralTendencyCalculator.GetAverage(input);
+            double actualAverage = centralTendencyCalculator.GetAverage(input);
 
             Assert.AreEqual(19.83, Math.Round(actualAverage, 2));
 

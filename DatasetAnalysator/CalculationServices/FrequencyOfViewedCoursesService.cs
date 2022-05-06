@@ -1,4 +1,4 @@
-﻿using DatasetAnalysator.CalculationServices;
+﻿using DatasetAnalysator.Helpers;
 using StudentDataAnalysatorMultiPlat.DatasetServices;
 using StudentDataAnalysatorMultiPlat.Models;
 using System;
@@ -32,7 +32,7 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
 
         public ObservableCollection<FrequencyDistributionResult>  GetResults()
         {
-            Dictionary<double, int> studentCoursesViewedDict = logHelper.CreateDictionaryWithCoursesViewed();
+            Dictionary<double, int> studentCoursesViewedDict = logHelper.CreateDictionaryWithCoursesViewedFromLog();
 
             FillFrequencyOfViewedCourses(studentCoursesViewedDict);
             CalculateFrequencyDistributionResult();
