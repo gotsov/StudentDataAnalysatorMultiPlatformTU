@@ -8,7 +8,7 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
 {
     public class FrequencyDistributionCalculator
     {
-        public static double CalculateRelativeFrequency(SortedDictionary<int, int> FrequencyViewedCoursesDict, int frequency)
+        public virtual double CalculateRelativeFrequency(SortedDictionary<int, int> FrequencyViewedCoursesDict, int frequency)
         {
             double relativeFrequency;
             int absoluteFrequency = CalculateAbsoluteFrequency(FrequencyViewedCoursesDict);
@@ -16,7 +16,7 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
             return relativeFrequency;
         }
 
-        public static int CalculateAbsoluteFrequency(SortedDictionary<int, int> FrequencyViewedCoursesDict)
+        public virtual int CalculateAbsoluteFrequency(SortedDictionary<int, int> FrequencyViewedCoursesDict)
         {
             int absoluteFrequency = 0;
             foreach (var entry in FrequencyViewedCoursesDict)

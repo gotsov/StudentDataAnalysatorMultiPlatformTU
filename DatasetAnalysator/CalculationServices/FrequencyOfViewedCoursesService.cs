@@ -12,19 +12,15 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
 {
     public class FrequencyOfViewedCoursesService
     {
+        private FrequencyDistributionCalculator frequencyCalculator;
         public LogDataHelper logHelper { get; set; }
         public SortedDictionary<int, int> frequencyViewedCoursesDict { get; set; }
         public ObservableCollection<FrequencyDistributionResult> frequencyResult { get; set; }
 
-        public FrequencyOfViewedCoursesService()
-        {
-            frequencyViewedCoursesDict = new SortedDictionary<int, int>();
-            frequencyResult = new ObservableCollection<FrequencyDistributionResult>();
-        }
-
-        public FrequencyOfViewedCoursesService(LogDataHelper logHelper)
+        public FrequencyOfViewedCoursesService(LogDataHelper logHelper, FrequencyDistributionCalculator frequencyCalculator)
         {
             this.logHelper = logHelper;
+            this.frequencyCalculator = frequencyCalculator;
 
             frequencyResult = new ObservableCollection<FrequencyDistributionResult>();
             frequencyViewedCoursesDict = new SortedDictionary<int, int>();
@@ -66,11 +62,11 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
             int absoluteFrequency;
             double relativeFrequency, totalPercentage = 0;
 
-            absoluteFrequency = FrequencyDistributionCalculator.CalculateAbsoluteFrequency(frequencyViewedCoursesDict);
+            absoluteFrequency = frequencyCalculator.CalculateAbsoluteFrequency(frequencyViewedCoursesDict);
 
             foreach (var frequency in frequencyViewedCoursesDict)
             {
-                relativeFrequency = FrequencyDistributionCalculator.CalculateRelativeFrequency(frequencyViewedCoursesDict, frequency.Value);
+                relativeFrequency = frequencyCalculator.CalculateRelativeFrequency(frequencyViewedCoursesDict, frequency.Value);
                 frequencyResult.Add(new FrequencyDistributionResult(frequency.Key.ToString(), frequency.Value, relativeFrequency.ToString() + "%"));
                 totalPercentage += relativeFrequency;
             }
