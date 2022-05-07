@@ -20,12 +20,12 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0"
-                               Text="Прегледани лекции"
+                               Text="Брой прегледани лекции"
                                VerticalOptions="Center"
                                HorizontalOptions="Center"/>
 
                 <Label Grid.Column="1"
-                               Text="Абсолютна ч."
+                               Text="Абсолютна ч. (брой студенти)"
                                VerticalOptions="Center"
                                HorizontalOptions="Center"/>
 
