@@ -11,6 +11,14 @@ namespace DatasetAnalysatorTest.DatasetServices
     [TestClass]
     public class FrequencyDistibutionCalculatorTest
     {
+        private FrequencyDistributionCalculator frequencyCalculator;
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            frequencyCalculator = new FrequencyDistributionCalculator();
+        }
+
         [TestMethod]
         public void TestCalculateRelativeFrequency()
         {
@@ -29,7 +37,7 @@ namespace DatasetAnalysatorTest.DatasetServices
 
             double expectedRelativeFrequency = 21.43;
 
-            double actualRelativeFrequency = FrequencyDistributionCalculator.CalculateRelativeFrequency(inputSortedDictionary, inputFrequency);
+            double actualRelativeFrequency = frequencyCalculator.CalculateRelativeFrequency(inputSortedDictionary, inputFrequency);
 
             Assert.AreEqual(expectedRelativeFrequency, actualRelativeFrequency);
         }
@@ -50,7 +58,7 @@ namespace DatasetAnalysatorTest.DatasetServices
 
             int expectedAbsoluteFrequency = 14;
 
-            int actualAbsoluteFrequency = FrequencyDistributionCalculator.CalculateAbsoluteFrequency(input);
+            int actualAbsoluteFrequency = frequencyCalculator.CalculateAbsoluteFrequency(input);
 
             Assert.AreEqual(expectedAbsoluteFrequency, actualAbsoluteFrequency);
         }

@@ -256,7 +256,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             StudentDataHelper studentDataHelper = new StudentDataHelper(LogsList, StudentsList);
             Dictionary<double, int> coursesViewedFromStudents = studentDataHelper.CreateDictionaryWithCoursesViewedByStudents();
 
-            frequencyOfViewedCoursesService = new FrequencyOfViewedCoursesService(logDataHelper);
+            frequencyOfViewedCoursesService = new FrequencyOfViewedCoursesService(logDataHelper, new FrequencyDistributionCalculator());
             frequencyResult = frequencyOfViewedCoursesService.GetResults();
 
             centralTendencyOfViewedCoursesByUsersService = new CentralTendencyOfViewedCoursesByUsersService(coursesViewedFromStudents, new CentralTendencyCalculator());
