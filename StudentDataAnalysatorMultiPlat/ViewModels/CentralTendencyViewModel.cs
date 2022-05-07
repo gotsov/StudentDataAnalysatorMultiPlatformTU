@@ -18,8 +18,8 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         public CentralTendencyViewModel()
         {
-            SingletonClass.TestEventAggregator.GetEvent<GetCentralTendencyResultEvent>().Subscribe(SetResultList);
-            SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Publish("");
+            SingletonClass.EventAggregator.GetEvent<GetCentralTendencyResultEvent>().Subscribe(SetResultList);
+            SingletonClass.EventAggregator.GetEvent<UpdateListsEvent>().Publish("");
         }
 
         public ObservableCollection<Student> StudentsList

@@ -56,6 +56,16 @@ namespace DatasetAnalysatorTest.CalculationServices
         }
 
         [TestMethod]
+        public void FillFrequencyOfViewedCoursesFromEmptyDictionaryTest()
+        {
+            var input = new Dictionary<double, int>();
+
+            FrequencyOfViewedCoursesService frequencySerivce = new FrequencyOfViewedCoursesService(logHelperTest, mockCalculator.Object);
+
+            Assert.ThrowsException<ArgumentException>(() => frequencySerivce.FillFrequencyOfViewedCourses(input));
+        }
+
+        [TestMethod]
         public void CalculateFrequencyDistributionResultTest()
         {
             var expectedFrequencyResult = new ObservableCollection<FrequencyDistributionResult>

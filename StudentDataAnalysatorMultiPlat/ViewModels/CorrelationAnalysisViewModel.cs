@@ -19,8 +19,8 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         public CorrelationAnalysisViewModel()
         {
-            SingletonClass.TestEventAggregator.GetEvent<GetCorrelationAnalysisEvent>().Subscribe(SetResultList);
-            SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Publish("");
+            SingletonClass.EventAggregator.GetEvent<GetCorrelationAnalysisEvent>().Subscribe(SetResultList);
+            SingletonClass.EventAggregator.GetEvent<UpdateListsEvent>().Publish("");
         }
 
         public ObservableCollection<Log> LogsList

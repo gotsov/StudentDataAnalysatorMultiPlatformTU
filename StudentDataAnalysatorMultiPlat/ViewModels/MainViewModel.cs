@@ -52,7 +52,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
             SelectedPathLogs = "Избери файл с дейности на студентите (Logs_Course)";
             CalculationButtonText = "Не са избрани файлове";
 
-            SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Subscribe(SendListsToSubscribedViewModels);
+            SingletonClass.EventAggregator.GetEvent<UpdateListsEvent>().Subscribe(SendListsToSubscribedViewModels);
         }
 
         #region Properties
@@ -202,17 +202,17 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         #region Methods
         private void GetExcelData(string path)
         {
-            Services.ExcelServices.ExcelDataReaderService _excelDataReader = new Services.ExcelServices.ExcelDataReaderService(path);
+            Services.ExcelServices.ExcelDataReaderService excelDataReader = new Services.ExcelServices.ExcelDataReaderService(path);
 
             if (IsTableStudentsResults())
             {
-                StudentsList = _excelDataReader.GetStudentListFromExcelTable();
+                StudentsList = excelDataReader.GetStudentListFromExcelTable();
                 SelectedPathStudentsResults = "..." + SelectedPath[^37..];
                 IsStudentsPathSelected = true;
             }
             else
             {
-                LogsList = _excelDataReader.GetLogListFromExcelTable();
+                LogsList = excelDataReader.GetLogListFromExcelTable();
                 SelectedPathLogs = "..." + SelectedPath[^38..];
                 IsLogsPathSelected = true;
             }
@@ -230,10 +230,10 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         public void SendListsToSubscribedViewModels(string test)
         {
-            SingletonClass.TestEventAggregator.GetEvent<GetFrequencyDistributionResultEvent>().Publish(frequencyResult);
-            SingletonClass.TestEventAggregator.GetEvent<GetCentralTendencyResultEvent>().Publish(tendencyResult);
-            SingletonClass.TestEventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Publish(dispersionResult);
-            SingletonClass.TestEventAggregator.GetEvent<GetCorrelationAnalysisEvent>().Publish(correlationResult);
+            SingletonClass.EventAggregator.GetEvent<GetFrequencyDistributionResultEvent>().Publish(frequencyResult);
+            SingletonClass.EventAggregator.GetEvent<GetCentralTendencyResultEvent>().Publish(tendencyResult);
+            SingletonClass.EventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Publish(dispersionResult);
+            SingletonClass.EventAggregator.GetEvent<GetCorrelationAnalysisEvent>().Publish(correlationResult);
         }
 
         private async Task ExecuteOpenFileDialogAsync()

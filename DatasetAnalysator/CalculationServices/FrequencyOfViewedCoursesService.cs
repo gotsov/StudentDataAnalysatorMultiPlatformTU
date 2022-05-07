@@ -38,6 +38,8 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
 
         public void FillFrequencyOfViewedCourses(Dictionary<double, int> studentCoursesViewedDict)
         {
+            CheckIfSortedDictionaryIsEmpty(studentCoursesViewedDict);
+
             Dictionary<int, int> UnsortedFrequencies = new Dictionary<int, int>();
             int studentsCount;
             foreach (var student in studentCoursesViewedDict)
@@ -76,6 +78,14 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
                 absoluteFrequency,
                 Math.Round(totalPercentage, 1).ToString() + "%")
                 );
+        }
+
+        private void CheckIfSortedDictionaryIsEmpty(Dictionary<double, int> input)
+        {
+            if (input.Count() == 0)
+            {
+                throw new ArgumentException("Sorted list is empty");
+            }
         }
     }
 }

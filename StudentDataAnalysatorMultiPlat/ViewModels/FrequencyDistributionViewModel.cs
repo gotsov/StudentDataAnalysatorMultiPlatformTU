@@ -17,8 +17,8 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         public FrequencyDistributionViewModel()
         {
-            SingletonClass.TestEventAggregator.GetEvent<GetFrequencyDistributionResultEvent>().Subscribe(SetResultList);
-            SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Publish("");
+            SingletonClass.EventAggregator.GetEvent<GetFrequencyDistributionResultEvent>().Subscribe(SetResultList);
+            SingletonClass.EventAggregator.GetEvent<UpdateListsEvent>().Publish("");
         }
         public ObservableCollection<Log> LogsList
         {

@@ -20,7 +20,7 @@ namespace DatasetAnalysatorTest.DatasetServices
         }
 
         [TestMethod]
-        public void TestCalculateRelativeFrequency()
+        public void CalculateRelativeFrequencyTest()
         {
             var inputSortedDictionary = new SortedDictionary<int, int>()
             {
@@ -43,7 +43,16 @@ namespace DatasetAnalysatorTest.DatasetServices
         }
 
         [TestMethod]
-        public void TestCalculateAbsoluteFrequency()
+        public void CalculateRelativeFrequencyWithEmptySortedDictionaryTest()
+        {
+            var inputSortedDictionary = new SortedDictionary<int, int>();
+            var inputFrequency = 3;
+
+            Assert.ThrowsException<ArgumentException>(() => frequencyCalculator.CalculateRelativeFrequency(inputSortedDictionary, inputFrequency));
+        }
+
+        [TestMethod]
+        public void CalculateAbsoluteFrequencyTest()
         {
             var input = new SortedDictionary<int, int>()
             {
@@ -61,6 +70,14 @@ namespace DatasetAnalysatorTest.DatasetServices
             int actualAbsoluteFrequency = frequencyCalculator.CalculateAbsoluteFrequency(input);
 
             Assert.AreEqual(expectedAbsoluteFrequency, actualAbsoluteFrequency);
+        }
+
+        [TestMethod]
+        public void CalculateAbsoluteFrequencyWithEmptySortedDictionaryTest()
+        {
+            var inputSortedDictionary = new SortedDictionary<int, int>();
+
+            Assert.ThrowsException<ArgumentException>(() => frequencyCalculator.CalculateAbsoluteFrequency(inputSortedDictionary));
         }
     }
 }

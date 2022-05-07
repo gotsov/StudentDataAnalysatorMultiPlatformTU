@@ -17,8 +17,8 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
 
         public StatisticalDispersionViewModel()
         {
-            SingletonClass.TestEventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Subscribe(SetResultList);
-            SingletonClass.TestEventAggregator.GetEvent<UpdateListsEvent>().Publish("");
+            SingletonClass.EventAggregator.GetEvent<GetStatisticalDispersionResultEvent>().Subscribe(SetResultList);
+            SingletonClass.EventAggregator.GetEvent<UpdateListsEvent>().Publish("");
         }
         public ObservableCollection<Log> LogsList
         {

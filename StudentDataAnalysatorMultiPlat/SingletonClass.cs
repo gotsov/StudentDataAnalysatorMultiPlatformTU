@@ -27,6 +27,6 @@ namespace StudentDataAnalysatorMultiPlat
             }
         }
 
-        public static IEventAggregator TestEventAggregator { get; set; }
+        public static IEventAggregator EventAggregator { get; set; }
     }
 }

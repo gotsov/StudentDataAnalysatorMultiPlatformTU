@@ -9,7 +9,7 @@ public partial class App : Application
 		InitializeComponent();
 
 		MainPage = new AppShell(); 
-		SingletonClass.TestEventAggregator = new EventAggregator();
+		SingletonClass.EventAggregator = new EventAggregator();
 	}
 
 }

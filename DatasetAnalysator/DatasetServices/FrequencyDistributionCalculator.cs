@@ -10,6 +10,8 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
     {
         public virtual double CalculateRelativeFrequency(SortedDictionary<int, int> FrequencyViewedCoursesDict, int frequency)
         {
+            CheckIfSortedDictionaryIsEmpty(FrequencyViewedCoursesDict);
+
             double relativeFrequency;
             int absoluteFrequency = CalculateAbsoluteFrequency(FrequencyViewedCoursesDict);
             relativeFrequency = (Math.Round(((double)frequency / (double)absoluteFrequency) * 100, 2));
@@ -18,12 +20,22 @@ namespace StudentDataAnalysatorMultiPlat.DatasetServices
 
         public virtual int CalculateAbsoluteFrequency(SortedDictionary<int, int> FrequencyViewedCoursesDict)
         {
+            CheckIfSortedDictionaryIsEmpty(FrequencyViewedCoursesDict);
+
             int absoluteFrequency = 0;
             foreach (var entry in FrequencyViewedCoursesDict)
             {
                 absoluteFrequency += entry.Value;
             }
             return absoluteFrequency;
+        }
+
+        private void CheckIfSortedDictionaryIsEmpty(SortedDictionary<int, int> input)
+        {
+            if(input.Count() == 0)
+            {
+                throw new ArgumentException("Sorted list is empty");
+            }
         }
     }
 }
