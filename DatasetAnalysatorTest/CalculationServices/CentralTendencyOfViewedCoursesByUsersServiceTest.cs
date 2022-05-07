@@ -40,6 +40,35 @@ namespace DatasetAnalysatorTest.CalculationServices
             }
 
             [TestMethod]
+            public void TestFailsOnEmptyModeList()
+            {
+                var coursesViewedList = getMockDataForCoursesViewedList();
+                var coursesViewedForEachStudent = getMockDataForCoursesViewedForEachStudent();
+                mockCalculator.Setup(m => m.GetMode(coursesViewedList)).Returns(new List<double>());
+
+                CentralTendencyOfViewedCoursesByUsersService centralTendencyOfViewedCoursesByUsersService = new CentralTendencyOfViewedCoursesByUsersService(coursesViewedForEachStudent, mockCalculator.Object);
+
+                var e = Assert.ThrowsException<InvalidOperationException>(() => centralTendencyOfViewedCoursesByUsersService.GetResults());
+                Assert.AreEqual(e.Message, "Mode list is empty");
+            }
+
+
+            [TestMethod]
+            public void TestFailsOnNullModeList()
+            {
+                var coursesViewedList = getMockDataForCoursesViewedList();
+                var coursesViewedForEachStudent = getMockDataForCoursesViewedForEachStudent();
+
+                List<double>? nullCoursesViewedList = null;
+                mockCalculator.Setup(m => m.GetMode(coursesViewedList)).Returns(nullCoursesViewedList);
+
+                CentralTendencyOfViewedCoursesByUsersService centralTendencyOfViewedCoursesByUsersService = new CentralTendencyOfViewedCoursesByUsersService(coursesViewedForEachStudent, mockCalculator.Object);
+
+                var e = Assert.ThrowsException<InvalidOperationException>(() => centralTendencyOfViewedCoursesByUsersService.GetResults());
+                Assert.AreEqual(e.Message, "Mode list is empty");
+            }
+
+            [TestMethod]
             public void TestGetResultsForAverage()
             {
                 var coursesViewedList = getMockDataForCoursesViewedList();
@@ -60,6 +89,7 @@ namespace DatasetAnalysatorTest.CalculationServices
             {
                 var coursesViewedList = getMockDataForCoursesViewedList();
                 var coursesViewedForEachStudent = getMockDataForCoursesViewedForEachStudent();
+
                 double expectedResult = 26;
                 mockCalculator.Setup(m => m.GetMode(coursesViewedList)).Returns(coursesViewedList);
                 mockCalculator.Setup(m => m.GetMedian(coursesViewedList)).Returns(expectedResult);
@@ -71,18 +101,6 @@ namespace DatasetAnalysatorTest.CalculationServices
                 Assert.AreEqual(expectedResult, result.ElementAt(0).Median);
             }
 
-            [TestMethod]
-            public void TestFailsOnEmptyModeList()
-            {
-                var coursesViewedList = getMockDataForCoursesViewedList();
-                var coursesViewedForEachStudent = getMockDataForCoursesViewedForEachStudent();
-                mockCalculator.Setup(m => m.GetMode(coursesViewedList)).Returns(new List<double>());
-
-                CentralTendencyOfViewedCoursesByUsersService centralTendencyOfViewedCoursesByUsersService = new CentralTendencyOfViewedCoursesByUsersService(coursesViewedForEachStudent, mockCalculator.Object);
-
-                var e = Assert.ThrowsException<InvalidOperationException>(() => centralTendencyOfViewedCoursesByUsersService.GetResults());
-                Assert.AreEqual(e.Message, "Mode list is empty");
-            }
 
 
             private List<double> getMockDataForCoursesViewedList()

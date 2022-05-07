@@ -52,7 +52,7 @@ namespace StudentDataAnalysatorMultiPlat.Services.CalculationServices
 
             List<double> modes = centralTendencyCalculator.GetMode(results);
 
-            if (!modes.Any())
+            if (modes == null || !modes.Any())
             {
                 throw new InvalidOperationException("Mode list is empty");
             }
