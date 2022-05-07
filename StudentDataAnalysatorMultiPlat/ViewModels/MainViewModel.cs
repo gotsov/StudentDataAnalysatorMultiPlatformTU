@@ -239,7 +239,7 @@ namespace StudentDataAnalysatorMultiPlat.ViewModels
         private async Task ExecuteOpenFileDialogAsync()
         {
             var result = await FilePicker.PickAsync();
-            if (IsSelectedFileExcel(result.FullPath))
+            if (result != null && IsSelectedFileExcel(result.FullPath))
                 SelectedPath = result.FullPath;
         }
 
